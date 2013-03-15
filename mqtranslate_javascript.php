@@ -324,7 +324,6 @@ function qtrans_initJS() {
 	foreach($q_config['enabled_languages'] as $language)
 		$q_config['js']['qtrans_switch_postbox'].= "
 				jQuery('#'+target).val(qtrans_integrate('".$language."', jQuery('#qtrans_textarea_'+target+'_'+'".$language."').val(), jQuery('#'+target).val()));
-				jQuery('#'+parent+' .mqtranslate_lang_div').removeClass('active');
 				jQuery('#'+parent+' .mqtranslate_lang_div').removeClass('switch-html');
 				jQuery('#'+parent+' .mqtranslate_lang_div').removeClass('switch-tmce');
 				if(lang!=false) jQuery('#qtrans_textarea_'+target+'_'+'".$language."').hide();
@@ -377,13 +376,6 @@ function qtrans_initJS() {
 			if(lang=='html') {
 				if ( inst && inst.isHidden() )
 					return false;
-				vta.style.height = inst.getContentAreaContainer().offsetHeight + 24 + 'px';
-				inst.hide();
-				qt.style.display = 'block';
-	
-				vta.style.color = '#000';
-				document.getElementById('edButtonHTML').className = 'active';
-				document.getElementById('edButtonPreview').className = '';
 				if ( inst ) {
 					vta.style.height = inst.getContentAreaContainer().offsetHeight + 20 + 'px';
 					inst.hide();
@@ -409,7 +401,6 @@ function qtrans_initJS() {
 				dom.addClass(wrap_id, 'tmce-active');
 				setUserSetting('editor', 'tinymce');
 			} else {
-
 				// switch content
 				qtrans_assign('qtrans_textarea_'+id,qtrans_use(lang,ta.value));
 			}

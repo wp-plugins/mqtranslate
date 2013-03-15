@@ -106,17 +106,6 @@ function qtrans_modifyRichEditor($old_content) {
 
 	// insert language, visual and html buttons
 	$el = qtrans_getSortedLanguages();
-	$content .= "var userLanguages = {\n";
-	$first = true;
-	foreach ($el as $language) {
-		if ($first)
-			$first = false;
-		else
-			$content .= ",\n";
-		$content .= "\t\t\t'{$language}': ";
-		$content .= ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language)) ? 'true' : 'false';
-	}
-	$content .= "\n\t\t};\n";
 	foreach($el as $language) {
 		if ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language) || $language == $q_config['default_language'])
 			$content .= qtrans_insertTitleInput($language);
