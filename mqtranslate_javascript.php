@@ -197,7 +197,7 @@ function qtrans_initJS() {
 			var t = document.getElementById('title');
 		";
 	foreach($q_config['enabled_languages'] as $language) {
-		if ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language) || $language == $q_config['default_language'])
+		if ($cu->has_cap('edit_users') || mqtrans_currentUserCanEdit($language) || mqtrans_currentUserCanView($language))
 		{
 			$q_config['js']['qtrans_integrate_title'].= "
 				t.value = qtrans_integrate('".$language."',document.getElementById('qtrans_title_".$language."').value,t.value);
@@ -306,7 +306,7 @@ function qtrans_initJS() {
 		qtrans_get_active_language = function() {
 	";
 	foreach($q_config['enabled_languages'] as $language) {
-		if ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language) || $language == $q_config['default_language'])
+		if ($cu->has_cap('edit_users') || mqtrans_currentUserCanEdit($language) || mqtrans_currentUserCanView($language))
 		{
 			$q_config['js']['qtrans_get_active_language'].= "
 					if(document.getElementById('qtrans_select_".$language."').className=='wp-switch-editor switch-tmce switch-html')

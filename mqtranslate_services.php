@@ -17,7 +17,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-/* mqTranslate Services */
+/* qTranslate Services */
 
 // generate public key
 $qs_public_key = '-----BEGIN PUBLIC KEY-----|MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNccmB4Up9V9+vD5kWWiE6zpRV|m7y1sdFihreycdpmu3aPjKooG5LWUbTTyc993nTxV71SKuuYdkPzu5JxniAsI2N0|7DsySZ/bQ2/BEANNwJD3pmz4NmIHgIeNaUze/tvTZq6m+FTVHSvEqAaXJIsQbO19|HeegbfEpmCj1d/CgOwIDAQAB|-----END PUBLIC KEY-----|';
@@ -99,7 +99,7 @@ function qs_base64_unserialize($var) {
 	return $var;
 }
 
-// sends a encrypted message to mqTranslate Services and decrypts the received data
+// sends a encrypted message to qTranslate Services and decrypts the received data
 function qs_queryQS($action, $data='', $fast = false) {
 	global $qs_public_key;
 	// generate new private key
@@ -367,15 +367,15 @@ function qs_order_columns($columns) {
 function qs_config_hook($request_uri) {
 	global $q_config;
 ?>
-<h3><?php _e('mqTranslate Services Settings', 'mqtranslate') ?><span id="mqtranslate-show-services" style="display:none"> (<a name="mqtranslate_service_settings" href="#mqtranslate_service_settings" onclick="showServices();"><?php _e('Show', 'mqtranslate'); ?></a>)</span></h3>
+<h3><?php _e('qTranslate Services Settings', 'mqtranslate') ?><span id="mqtranslate-show-services" style="display:none"> (<a name="mqtranslate_service_settings" href="#mqtranslate_service_settings" onclick="showServices();"><?php _e('Show', 'mqtranslate'); ?></a>)</span></h3>
 <table class="form-table" id="mqtranslate-services">
 	<tr>
-		<th scope="row"><?php _e('mqTranslate Services', 'mqtranslate') ?></th>
+		<th scope="row"><?php _e('qTranslate Services', 'mqtranslate') ?></th>
 		<td>
-			<?php if(!qs_isOpenSSLAvailable()) { printf(__('<div id="message" class="error fade"><p>mqTranslate Services could not load <a href="%s">OpenSSL</a>!</p></div>'), 'http://www.php.net/manual/book.openssl.php'); } ?>
-			<label for="mqtranslate_services"><input type="checkbox" name="mqtranslate_services" id="mqtranslate_services" value="1"<?php echo ($q_config['mqtranslate_services'])?' checked="checked"':''; ?>/> <?php _e('Enable mqTranslate Services', 'mqtranslate'); ?></label>
+			<?php if(!qs_isOpenSSLAvailable()) { printf(__('<div id="message" class="error fade"><p>qTranslate Services could not load <a href="%s">OpenSSL</a>!</p></div>'), 'http://www.php.net/manual/book.openssl.php'); } ?>
+			<label for="mqtranslate_services"><input type="checkbox" name="mqtranslate_services" id="mqtranslate_services" value="1"<?php echo ($q_config['mqtranslate_services'])?' checked="checked"':''; ?>/> <?php _e('Enable qTranslate Services', 'mqtranslate'); ?></label>
 			<br/>
-			<?php _e('With mqTranslate Services, you will be able to use professional human translation services with a few clicks.', 'mqtranslate'); ?><br />
+			<?php _e('With qTranslate Services, you will be able to use professional human translation services with a few clicks.', 'mqtranslate'); ?><br />
 		</td>
 	</tr>
 <?php 
@@ -426,7 +426,7 @@ function qs_config_hook($request_uri) {
 		}
 ?>
 			</table>
-			<p><?php printf(__('mqTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href="%s">check manually</a>.','mqtranslate'),'options-general.php?page=mqtranslate&qs_cron=true#mqtranslate_service_settings'); ?></p>
+			<p><?php printf(__('qTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href="%s">check manually</a>.','mqtranslate'),'options-general.php?page=mqtranslate&qs_cron=true#mqtranslate_service_settings'); ?></p>
 			<p><?php _e('Deleting an open order doesn\'t cancel it. You will have to logon to the service homepage and cancel it there.','mqtranslate'); ?></p>
 <?php } else { ?>
 			<p><?php _e('No open orders.','mqtranslate'); ?></p>
@@ -436,7 +436,7 @@ function qs_config_hook($request_uri) {
 	<tr valign="top">
 		<th scope="row" colspan="2">
 			<h4><?php _e('Service Configuration', 'mqtranslate');?></h4>
-			<p class="description"><!--<?php _e('Below, you will find configuration settings for mqTranslate Service Providers, which are required for them to operate.', 'mqtranslate'); ?>--></p>
+			<p class="description"><!--<?php _e('Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate.', 'mqtranslate'); ?>--></p>
 		</th>
 	</tr>
 <?php
@@ -647,9 +647,9 @@ function qs_service() {
 	if(isset($error)) {
 ?>
 <div class="wrap">
-<h2><?php _e('mqTranslate Services', 'mqtranslate'); ?></h2>
+<h2><?php _e('qTranslate Services', 'mqtranslate'); ?></h2>
 <div id="message" class="error fade"><p><?php echo $error; ?></p></div>
-<p><?php printf(__('An serious error occured and mqTranslate Services cannot proceed. For help, please visit the <a href="%s">Support Forum</a>','mqtranslate'), 'http://www.qianqin.de/mqtranslate/forum/');?></p>
+<p><?php printf(__('An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href="%s">Support Forum</a>','mqtranslate'), 'http://www.qianqin.de/mqtranslate/forum/');?></p>
 </div>
 <?php
 	return;
@@ -657,7 +657,7 @@ function qs_service() {
 	if(isset($order_completed_message)) {
 ?>
 <div class="wrap">
-<h2><?php _e('mqTranslate Services', 'mqtranslate'); ?></h2>
+<h2><?php _e('qTranslate Services', 'mqtranslate'); ?></h2>
 <div id="message" class="updated fade"><p><?php _e('Order successfully sent.', 'mqtranslate'); ?></p></div>
 <p><?php _e('Your translation order has been successfully transfered to the selected service.','mqtranslate'); ?></p>
 <?php
@@ -672,7 +672,7 @@ function qs_service() {
 	<li><a href="<?php echo add_query_arg('target_language', null, $url_link); ?>"><?php _e('Translate this post to another language.', 'mqtranslate'); ?></a></li>
 	<li><a href="edit.php"><?php _e('Translate a different post.', 'mqtranslate'); ?></a></li>
 	<li><a href="options-general.php?page=mqtranslate#mqtranslate_service_settings"><?php _e('View all open orders.', 'mqtranslate'); ?></a></li>
-	<li><a href="options-general.php?page=mqtranslate&qs_cron=true#mqtranslate_service_settings"><?php _e('Let mqTranslate Services check if any open orders are finished.', 'mqtranslate'); ?></a></li>
+	<li><a href="options-general.php?page=mqtranslate&qs_cron=true#mqtranslate_service_settings"><?php _e('Let qTranslate Services check if any open orders are finished.', 'mqtranslate'); ?></a></li>
 	<li><a href="<?php echo get_permalink($post_id); ?> "><?php _e('View this post.', 'mqtranslate'); ?></a></li>
 </ul>
 </div>
@@ -681,7 +681,7 @@ function qs_service() {
 	}
 ?>
 <div class="wrap">
-<h2><?php _e('mqTranslate Services', 'mqtranslate'); ?></h2>
+<h2><?php _e('qTranslate Services', 'mqtranslate'); ?></h2>
 <?php
 if(!empty($message)) {
 ?>
@@ -741,7 +741,7 @@ if(!empty($message)) {
 		<div id="submitdiv" class="postbox">
 			<h3 class="hndle"><?php _e('Request Translation', 'mqtranslate'); ?></h3>
 			<div class="inside request">
-				<noscript><?php _e('Javascript is required for mqTranslate Services', 'mqtranslate'); ?></noscript>
+				<noscript><?php _e('Javascript is required for qTranslate Services', 'mqtranslate'); ?></noscript>
 				<p><?php _e('Please choose a service first', 'mqtranslate'); ?></p>
 			</div>
 		</div>
@@ -751,7 +751,7 @@ if(!empty($message)) {
 		$timestamp = time();
 		if($timestamp != qs_queryQS(QS_VERIFY, $timestamp)) {
 ?>
-<p class="error"><?php _e('ERROR: Could not connect to mqTranslate Services. Please try again later.', 'mqtranslate');?></p>
+<p class="error"><?php _e('ERROR: Could not connect to qTranslate Services. Please try again later.', 'mqtranslate');?></p>
 <?php
 			return;
 		}
@@ -818,7 +818,7 @@ if(!empty($message)) {
 		</div>
 	</div>
 
-<p><?php _e('Your article will be SSL encrypted and securly sent to mqTranslate Services, which will forward your text to the chosen Translation Service. Once mqTranslate Services receives the translated text, it will automatically appear on your blog.', 'mqtranslate'); ?></p>
+<p><?php _e('Your article will be SSL encrypted and securly sent to qTranslate Services, which will forward your text to the chosen Translation Service. Once qTranslate Services receives the translated text, it will automatically appear on your blog.', 'mqtranslate'); ?></p>
 <?php
 		}
 ?>

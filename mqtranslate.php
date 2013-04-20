@@ -207,7 +207,7 @@ $q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas dis
 $q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 $q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 
-// mqTranslate Services
+// qTranslate Services
 $q_config['mqtranslate_services'] = false;
 
 // strftime usage (backward compability)
@@ -454,7 +454,7 @@ require_once(dirname(__FILE__)."/mqtranslate_wphacks.php");
 require_once(dirname(__FILE__)."/mqtranslate_widget.php");
 require_once(dirname(__FILE__)."/mqtranslate_configuration.php");
 
-// load mqTranslate Services if available
+// load qTranslate Services if available
 if(file_exists(dirname(__FILE__)."/mqtranslate_services.php"))
 	require_once(dirname(__FILE__)."/mqtranslate_services.php");
 

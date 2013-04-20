@@ -48,6 +48,22 @@ function qtrans_init() {
 			delete_option('mqtranslate_term_name');
 		}
 	}
+	
+	// Settings migration
+	if (isset($_POST['mqtranslate_migration']) && 'none' !== $_POST['mqtranslate_migration'])
+	{
+		switch ($_POST['mqtranslate_migration'])
+		{
+			case 'import':
+				mqtrans_import_settings_from_qtrans();
+				break;
+				
+			case 'export':
+				mqtrans_export_setting_to_qtrans(!empty($_POST['mqtranslate_export_migration_option']));
+				break;
+		}
+	}
+	
 	qtrans_loadConfig();
 	if(isset($_COOKIE['qtrans_cookie_test'])) {
 		$q_config['cookie_enabled'] = true;

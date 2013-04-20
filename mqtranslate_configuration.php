@@ -551,9 +551,21 @@ function mqtranslate_conf() {
 			<tr>
 				<th scope="row"><?php _e('Convert Database', 'mqtranslate');?></th>
 				<td>
-					<?php printf(__('If you are updating from mqTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'mqtranslate'), $clean_uri.'&convert=true'); ?>
+					<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'mqtranslate'), $clean_uri.'&convert=true'); ?>
 					<?php printf(__('If you have installed mqTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'mqtranslate'), $clean_uri.'&markdefault=true'); ?>
 					<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'mqtranslate'); ?>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php _e('Settings Migration', 'mqtranslate');?></th>
+				<td>
+					<label for="mqtranslate_no_migration"><input type="radio" name="mqtranslate_migration" id="mqtranslate_no_migration" value="none" checked /> <?php _e('Do not migrate any setting', 'mqtranslate'); ?></label>
+					<br/>
+					<label for="mqtranslate_import_migration"><input type="radio" name="mqtranslate_migration" id="mqtranslate_import_migration" value="import" /> <?php _e('Import settings from qTranslate', 'mqtranslate'); ?></label>
+					<br/>
+					<label for="mqtranslate_export_migration"><input type="radio" name="mqtranslate_migration" id="mqtranslate_export_migration" value="export" /> <?php _e('Export settings to qTranslate', 'mqtranslate'); ?></label>
+					<br/>
+					<label for="mqtranslate_export_migration_option"><input type="checkbox" name="mqtranslate_export_migration_option" id="mqtranslate_export_migration_option" value="1" checked /> <?php _e('Export settings only if qTranslate is installed.', 'mqtranslate'); ?></label>
 				</td>
 			</tr>
 			<tr>

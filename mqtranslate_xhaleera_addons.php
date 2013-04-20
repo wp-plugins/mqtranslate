@@ -1,5 +1,37 @@
 <?php
-function qtrans_currentUserCanEdit($lang) {
+function mqtrans_import_settings_from_qtrans() {
+	global $wpdb;
+	
+	$option_names = $wpdb->get_col("SELECT `option_name` FROM {$wpdb->options} WHERE `option_name` LIKE 'qtranslate\_%'");
+	foreach ($option_names as $name)
+	{		
+		$opt = get_option($name);
+		
+		$nn = "m{$name}";
+		if ( false !== get_option($nn) )
+			update_option($nn, $opt);
+		else
+			add_option($nn, $opt);
+	}
+}
+
+function mqtrans_export_setting_to_qtrans($updateOnly = false) {
+	global $wpdb;
+	
+	$option_names = $wpdb->get_col("SELECT `option_name` FROM {$wpdb->options} WHERE `option_name` LIKE 'mqtranslate\_%'");
+	foreach ($option_names as $name)
+	{
+		$opt = get_option($name);
+	
+		$nn = substr($name, 1);
+		if ( false !== get_option($nn) )
+			update_option($nn, $opt);
+		else if (!$updateOnly)
+			add_option($nn, $opt);
+	}
+}
+
+function mqtrans_currentUserCanEdit($lang) {
 	$cu = wp_get_current_user();
 	if ($cu->has_cap('edit_users'))
 		return true;
@@ -13,81 +45,134 @@ function qtrans_currentUserCanEdit($lang) {
 	}
 }
 
-function qtrans_userProfile($user) {
+function mqtrans_currentUserCanView($lang) {
+	global $q_config;
+	
+	$cu = wp_get_current_user();
+	if ($cu->has_cap('edit_users'))
+		return true;
+	else
+	{
+		$master_lang = get_user_meta($cu->ID, 'mqtranslate_master_language', true);
+		if (empty($master_lang))
+			return ($lang === $q_config['default_language']);
+		else
+			return ($lang === $master_lang);
+	}
+}
+
+function mqtrans_userProfile($user) {
 	global $q_config;
 
 	$cu = wp_get_current_user();
-
-	echo '<h3>'.__('mqTranslate user language access', 'mqtranslate') . "</h3>\n";
+	$langs = qtrans_getSortedLanguages();
 	
+	echo '<h3>'.__('mqTranslate User Language Settings', 'mqtranslate') . "</h3>\n";
+	echo "<table class=\"form-table\">\n<tbody>\n";
+	
+	// Editable languages
 	$user_langs = get_user_meta($user->ID, 'mqtranslate_language_access', true);
 	if (empty($user_langs))
 		$user_langs = array();
 	else
 		$user_langs = explode(',', $user_langs);
-	$langs = qtrans_getSortedLanguages();
-	
-	echo "<table class=\"form-table\">\n<tbody>\n<tr>\n";
+	echo "<tr>\n";
 	if ($cu->ID == $user->ID)
 		echo '<th>'.__('You can edit posts in', 'mqtranslate') . "</th>\n";
 	else
 		echo '<th>'.__('This user can edit posts in', 'mqtranslate') . "</th>\n";
-
+	echo "<td>";
 	if ($user->has_cap('edit_users'))
 	{
-		echo "<td>";
 		if (empty($langs))
 			_e('No language available', 'mqtranslate');
 		else if ($cu->ID == $user->ID)
 			_e('As an Administrator, you can edit posts in all languages.', 'mqtranslate');
 		else
 			_e('As an Administrator, this user can edit posts in all languages.', 'mqtranslate');
-		echo "</td>\n";
 	}
 	else if ($cu->has_cap('edit_users'))
 	{
-		echo "<td>\n";
 		if (empty($langs))
 			_e('No language available', 'mqtranslate')."\n";
 		else
 		{
 			$checkboxes = array();
 			foreach ($langs as $l) {
-				$name = "qtrans_user_lang_{$l}";
+				$name = "mqtrans_user_lang_{$l}";
 				$checked = (in_array($l, $user_langs)) ? 'checked' : '';
-				$checkboxes[] = "<label for=\"{$name}\"><input type=\"checkbox\" name=\"qtrans_user_lang[]\" id=\"{$name}\" value=\"{$l}\" {$checked} /> {$q_config['language_name'][$l]}</label>\n";
+				$checkboxes[] = "<label for=\"{$name}\"><input type=\"checkbox\" name=\"mqtrans_user_lang[]\" id=\"{$name}\" value=\"{$l}\" {$checked} /> {$q_config['language_name'][$l]}</label>\n";
 			}
 			echo implode("<br />\n", $checkboxes);
 		}
-		echo "</td>\n";
 	}
 	else
 	{
-		echo "<td>\n";
 		$intersect = array_intersect($langs, $user_langs);
 		if (empty($intersect))
 			_e('No language selected', 'mqtranslate')."\n";
 		else
 		{
+			$languages = array();
 			foreach ($intersect as $l)
-				echo "{$q_config['language_name'][$l]}\n";
+				$languages[] = $q_config['language_name'][$l];
+			echo implode(', ', $languages);
 		}
-		echo "</td>\n";
 	}
-	echo "</tr>\n</tbody>\n</table>\n";
+	echo "</td>\n";
+	echo "</tr>\n";
+	
+	// Master language
+	$user_master_lang = get_user_meta($user->ID, 'mqtranslate_master_language', true);
+	echo "<tr>\n";
+	echo '<th>' . __('Master language', 'mqtranslate') . "</th>\n";
+	echo "<td>\n";
+	if ($user->has_cap('edit_users'))
+		_e('Not applicable to Administrators', 'mqtranslate');
+	else if ($cu->has_cap('edit_users'))
+	{
+		echo "<select name=\"mqtrans_master_lang\">\n";
+		echo '<option value="">' . __('Default Language', 'mqtranslate') . "</option>\n";
+		foreach ($langs as $l)
+		{
+			if ($l == $q_config['default_language'])
+				continue;
+			$selected = ($user_master_lang == $l) ? ' selected' : '';
+			echo "<option value=\"{$l}\"{$selected}>{$q_config['language_name'][$l]}</option>\n";
+		}
+		echo "</select>\n";
+		echo '<span class="description">' . __('Language from which texts should be translated by this user', 'mqtranslate') . "</span>\n";
+	}
+	else
+	{
+		if (empty($langs) || empty($user_master_lang) || !in_array($user_master_lang, $langs))
+			_e('Default Language', 'mqtranslate');
+		else
+			echo $q_config['language_name'][$user_master_lang];
+	}
+	echo "</td>\n";
+	echo "</tr>\n";
+	
+	echo "</tbody>\n</table>\n";
 }
 
-function qtrans_userProfileUpdate($user_id) {
+function mqtrans_userProfileUpdate($user_id) {
 	$cu = wp_get_current_user();
 	if ($cu->has_cap('edit_users')) {
-		$langs = (empty($_POST['qtrans_user_lang'])) ? array() : $_POST['qtrans_user_lang'];
+		// Editable languages
+		$langs = (empty($_POST['mqtrans_user_lang'])) ? array() : $_POST['mqtrans_user_lang'];
 		if (!is_array($langs))
 			$langs = array();
-			
 		if (empty($langs))
 			delete_user_meta($user_id, 'mqtranslate_language_access');
 		else
 			update_user_meta($user_id, 'mqtranslate_language_access', implode(',', $langs));
+		
+		// Master language
+		if (empty($_POST['mqtrans_master_lang']))
+			delete_user_meta($user_id, 'mqtranslate_master_language');
+		else
+			update_user_meta($user_id, 'mqtranslate_master_language', $_POST['mqtrans_master_lang']);
 	}
 }
 
@@ -96,7 +181,7 @@ function qtrans_isEmptyContent($value) {
 	return empty($str);
 }
 
-function qtrans_postUpdated($post_ID, $after, $before) {
+function mqtrans_postUpdated($post_ID, $after, $before) {
 	global $wpdb;
 
 	$cu = wp_get_current_user();
@@ -115,7 +200,7 @@ function qtrans_postUpdated($post_ID, $after, $before) {
 		$titleBefore = qtrans_split($before->post_title);
 		$titleAfter = qtrans_split($after->post_title);
 		foreach ($titleAfter as $k => $v) {
-			if (!qtrans_currentUserCanEdit($k))
+			if (!mqtrans_currentUserCanEdit($k))
 				unset($titleAfter[$k]);
 		}
 		$title = array_merge($titleBefore, $titleAfter);
@@ -123,12 +208,12 @@ function qtrans_postUpdated($post_ID, $after, $before) {
 		$contentBefore = qtrans_split($before->post_content);
 		$contentAfter = qtrans_split($after->post_content);
 		foreach ($contentAfter as $k => $v) {
-			if (qtrans_isEmptyContent($v) || !qtrans_currentUserCanEdit($k))
+			if (qtrans_isEmptyContent($v) || !mqtrans_currentUserCanEdit($k))
 				unset($contentAfter[$k]);
 		}
 		$content = array_merge($contentBefore, $contentAfter);
 	}
-		
+	
 	$data = array('post_title' => qtrans_join($title), 'post_content' => qtrans_join($content));
 	$data = stripslashes_deep($data);
 	$where = array('ID' => $post_ID);
@@ -136,8 +221,8 @@ function qtrans_postUpdated($post_ID, $after, $before) {
 	$wpdb->update($wpdb->posts, $data, $where);
 }
 
-add_action('edit_user_profile', 			'qtrans_userProfile');
-add_action('show_user_profile',				'qtrans_userProfile');
-add_action('profile_update',				'qtrans_userProfileUpdate');
-add_action('post_updated',					'qtrans_postUpdated', 10, 3);
+add_action('edit_user_profile', 			'mqtrans_userProfile');
+add_action('show_user_profile',				'mqtrans_userProfile');
+add_action('profile_update',				'mqtrans_userProfileUpdate');
+add_action('post_updated',					'mqtrans_postUpdated', 10, 3);
 ?>

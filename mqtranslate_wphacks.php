@@ -107,12 +107,12 @@ function qtrans_modifyRichEditor($old_content) {
 	// insert language, visual and html buttons
 	$el = qtrans_getSortedLanguages();
 	foreach($el as $language) {
-		if ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language) || $language == $q_config['default_language'])
+		if ($cu->has_cap('edit_users') || mqtrans_currentUserCanEdit($language) || mqtrans_currentUserCanView($language))
 			$content .= qtrans_insertTitleInput($language);
 	}
 	$el = qtrans_getSortedLanguages(true);
 	foreach($el as $language) {
-		if ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language) || $language == $q_config['default_language'])
+		if ($cu->has_cap('edit_users') || mqtrans_currentUserCanEdit($language) || mqtrans_currentUserCanView($language))
 			$content .= qtrans_createEditorToolbarButton($language, $id);
 	}
 	
@@ -306,11 +306,11 @@ function qtrans_insertTitleInput($language){
 	global $q_config;
 
 	$cu = wp_get_current_user();
-	$editable = ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language));
+	$editable = ($cu->has_cap('edit_users') || mqtrans_currentUserCanEdit($language));
 
 	$title = __("Title", 'mqtranslate')." (".$q_config['language_name'][$language].")";
 	if (!$editable)
-		$title .= ' - ' . __('Read only');
+		$title .= ' - ' . __('Read only', 'mqtranslate');
 
 	$html ="
 	
@@ -351,11 +351,11 @@ function qtrans_createEditorToolbarButton($language, $id, $js_function = 'switch
 	global $q_config;
 	
 	$cu = wp_get_current_user();
-	$editable = ($cu->has_cap('edit_users') || qtrans_currentUserCanEdit($language));
+	$editable = ($cu->has_cap('edit_users') || mqtrans_currentUserCanEdit($language));
 	
 	$title = (($label==='')?$q_config['language_name'][$language]:$label);
 	if (!$editable)
-		$title .= ' - ' . __('Read only');
+		$title .= ' - ' . __('Read only', 'mqtranslate');
 	
 	$html = "
 		var bc = document.getElementById('wp-".$id."-editor-tools');

@@ -3,7 +3,7 @@ Contributors: chsxf, chineseleper
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, professional, translation, service, human
 Requires at least: 3.5.1
 Tested up to: 3.5.1
-Stable tag: 2.5.34.1
+Stable tag: 2.5.34.2
 Donate Link: http://www.qianqin.de/qtranslate/contribute/
 License: GPLv2
 
@@ -66,6 +66,12 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 3. qTranslate Services (Translation)
 
 == Changelog ==
+
+2.5.34.2:
+
+- Added the ability to migrate settings from/to qTranslate (under Advanced Settings > Settings Migration)
+- Added the ability to select a master language at user level to override the default language setting
+- Removed mqtranslate self translation files (except French) until they can be upgraded with correct information
 
 2.5.34.1:
 
