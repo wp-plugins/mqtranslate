@@ -57,7 +57,7 @@ function mqtrans_currentUserCanView($lang) {
 		if (empty($master_lang))
 			return ($lang === $q_config['default_language']);
 		else
-			return ($lang === $master_lang);
+			return ($lang === $master_lang || $lang === $q_config['default_language']);
 	}
 }
 
