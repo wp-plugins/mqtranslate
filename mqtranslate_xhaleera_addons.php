@@ -221,6 +221,13 @@ function mqtrans_postUpdated($post_ID, $after, $before) {
 	$wpdb->update($wpdb->posts, $data, $where);
 }
 
+function mqtrans_filterHomeURL($url, $path, $orig_scheme, $blog_id) {
+	return qtrans_convertURL($url);
+}
+
+if (!defined('WP_ADMIN'))
+	add_filter('home_url', 'mqtrans_filterHomeURL', 10, 4);
+
 add_action('edit_user_profile', 			'mqtrans_userProfile');
 add_action('show_user_profile',				'mqtrans_userProfile');
 add_action('profile_update',				'mqtrans_userProfileUpdate');
