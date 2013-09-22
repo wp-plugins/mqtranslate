@@ -3,7 +3,7 @@ Contributors: chsxf, chineseleper
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, professional, translation, service, human
 Requires at least: 3.6.1
 Tested up to: 3.6.1
-Stable tag: 2.5.36.1
+Stable tag: 2.5.37
 Donate Link: http://www.qianqin.de/qtranslate/contribute/
 License: GPLv2
 
@@ -67,9 +67,13 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 
 == Changelog ==
 
-2.5.36.1:
+2.5.37:
 
 - Updated to match up qTranslate 2.5.37
+
+2.5.36.1:
+
+- Updated for WordPress 3.6.1
 
 2.5.36:
 
