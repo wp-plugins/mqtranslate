@@ -718,8 +718,11 @@ function qtrans_join($texts) {
 	$text = "";
 	
 	foreach($q_config['enabled_languages'] as $language) {
-		$texts[$language] = preg_split($split_regex, $texts[$language]);
-		if(sizeof($texts[$language]) > $max) $max = sizeof($texts[$language]);
+		if (!empty($texts[$language]))
+		{
+			$texts[$language] = preg_split($split_regex, $texts[$language]);
+			if(sizeof($texts[$language]) > $max) $max = sizeof($texts[$language]);
+		}
 	}
 	for($i=0;$i<$max;$i++) {
 		if($i>=1) {
