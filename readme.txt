@@ -2,8 +2,8 @@
 Contributors: chsxf, chineseleper
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, professional, translation, service, human
 Requires at least: 3.6.1
-Tested up to: 3.7.1
-Stable tag: 2.5.39
+Tested up to: 3.8
+Stable tag: 2.5.40
 Donate Link: http://www.qianqin.de/qtranslate/contribute/
 License: GPLv2
 
@@ -66,6 +66,13 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 3. qTranslate Services (Translation)
 
 == Changelog ==
+
+2.5.40:
+
+- Updated for WordPress 3.8
+- Fixed a bug in the URL parser when adding language information
+- Fixed a bug with post dates and times
+- Added Serbo-Croatian translation thanks to Borisa Djuraskovic from [WebHostingHub](http://www.webhostinghub.com)
 
 2.5.39:
 

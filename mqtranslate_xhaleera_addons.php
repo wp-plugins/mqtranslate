@@ -222,11 +222,42 @@ function mqtrans_postUpdated($post_ID, $after, $before) {
 }
 
 function mqtrans_filterHomeURL($url, $path, $orig_scheme, $blog_id) {
-	return qtrans_convertURL($url);
+	return (empty($path) || $path == '/') ? qtrans_convertURL($url) : $url;
+}
+
+function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $single) {
+	if ($meta_key == '_menu_item_url')
+	{
+		$meta = wp_cache_get($object_id, 'post_meta');
+		if (!empty($meta) && array_key_exists($meta_key, $meta) && !empty($meta[$meta_key]))
+		{
+			if ($single === false)
+			{
+				if (is_array($meta[$meta_key]))
+					$meta = $meta[$meta_key];
+				else
+					$meta = array($meta[$meta_key]);
+				$meta = array_map('qtrans_convertURL', $meta);
+			}
+			else
+			{
+				if (is_array($meta[$meta_key]))
+					$meta = $meta[$meta_key][0];
+				else
+					$meta = $meta[$meta_key];
+				$meta = qtrans_convertURL($meta);
+			}
+			return $meta;
+		}
+	}
+	return null;
 }
 
 if (!defined('WP_ADMIN'))
+{
 	add_filter('home_url', 'mqtrans_filterHomeURL', 10, 4);
+	add_filter('get_post_metadata', 'mqtrans_filterPostMetaData', 10, 4);
+}
 
 add_action('edit_user_profile', 			'mqtrans_userProfile');
 add_action('show_user_profile',				'mqtrans_userProfile');

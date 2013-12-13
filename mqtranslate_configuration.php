@@ -441,7 +441,7 @@ function mqtranslate_conf() {
 <?php } else { ?>
 <div class="wrap">
 <h2><?php _e('Language Management (mqTranslate Configuration)', 'mqtranslate'); ?></h2> 
-<div class="tablenav"><?php printf(__('For help on how to configure mqTranslate correctly, take a look at the <a href="%1$s">mqTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'mqtranslate'), 'http://www.qianqin.de/mqtranslate/faq/', 'http://www.qianqin.de/mqtranslate/forum/viewforum.php?f=3'); ?></div>
+<div class="tablenav"><?php printf(__('For help on how to configure mqTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'mqtranslate'), 'http://www.qianqin.de/qtranslate/faq/', 'http://www.qianqin.de/qtranslate/forum/viewforum.php?f=3'); ?></div>
 	<form action="<?php echo $clean_uri;?>" method="post">
 		<h3><?php _e('General Settings', 'mqtranslate') ?></h3>
 		<table class="form-table">

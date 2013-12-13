@@ -472,37 +472,51 @@ function qtrans_strftime($format, $date, $default = '', $before = '', $after = '
 }
 
 function qtrans_dateFromPostForCurrentLanguage($old_date, $format ='', $before = '', $after = '') {
-	global $post;
+	global $post, $q_config;
+	if (!empty($format) && $q_config['use_strftime'] == QT_STRFTIME)
+		$format = qtrans_convertDateFormatToStrftimeFormat($format);
 	return qtrans_strftime(qtrans_convertDateFormat($format), mysql2date('U',$post->post_date), $old_date, $before, $after);
 }
 
 function qtrans_dateModifiedFromPostForCurrentLanguage($old_date, $format ='') {
-	global $post;
+	global $post, $q_config;
+	if (!empty($format) && $q_config['use_strftime'] == QT_STRFTIME)
+		$format = qtrans_convertDateFormatToStrftimeFormat($format);
 	return qtrans_strftime(qtrans_convertDateFormat($format), mysql2date('U',$post->post_modified), $old_date);
 }
 
 function qtrans_timeFromPostForCurrentLanguage($old_date, $format = '', $post = null, $gmt = false) {
+	global $q_config;
+	
 	$post = get_post($post);
 	
 	$post_date = $gmt? $post->post_date_gmt : $post->post_date;
+	if (!empty($format) && $q_config['use_strftime'] == QT_STRFTIME)
+		$format = qtrans_convertDateFormatToStrftimeFormat($format);
 	return qtrans_strftime(qtrans_convertTimeFormat($format), mysql2date('U',$post_date), $old_date);
 }
 
 function qtrans_timeModifiedFromPostForCurrentLanguage($old_date, $format = '', $gmt = false) {
-	global $post;
+	global $post, $q_config;
 	$post_date = $gmt? $post->post_modified_gmt : $post->post_modified;
+	if (!empty($format) && $q_config['use_strftime'] == QT_STRFTIME)
+		$format = qtrans_convertDateFormatToStrftimeFormat($format);
 	return qtrans_strftime(qtrans_convertTimeFormat($format), mysql2date('U',$post_date), $old_date);
 }
 
 function qtrans_dateFromCommentForCurrentLanguage($old_date, $format ='') {
-	global $comment;
+	global $comment, $q_config;
+	if (!empty($format) && $q_config['use_strftime'] == QT_STRFTIME)
+		$format = qtrans_convertDateFormatToStrftimeFormat($format);
 	return qtrans_strftime(qtrans_convertDateFormat($format), mysql2date('U',$comment->comment_date), $old_date);
 }
 
 function qtrans_timeFromCommentForCurrentLanguage($old_date, $format = '', $gmt = false, $translate = true) {
 	if(!$translate) return $old_date;
-	global $comment;
+	global $comment, $q_config;
 	$comment_date = $gmt? $comment->comment_date_gmt : $comment->comment_date;
+	if (!empty($format) && $q_config['use_strftime'] == QT_STRFTIME)
+		$format = qtrans_convertDateFormatToStrftimeFormat($format);
 	return qtrans_strftime(qtrans_convertTimeFormat($format), mysql2date('U',$comment_date), $old_date);
 }
 
@@ -570,6 +584,8 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false) {
 		}
 		// strip home path
 		$url = substr($url,strlen($home));
+		if ($url === false)
+			$url = '';
 	} else {
 		// relative url, strip home path
 		$homeinfo = qtrans_parseURL($home);
@@ -603,7 +619,7 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false) {
 	if(preg_match("#^(wp-login.php|wp-signup.php|wp-register.php|wp-admin/)#", $url)) {
 		return $home."/".$url;
 	}
-	
+
 	switch($q_config['url_mode']) {
 		case QT_URL_PATH:	// pre url
 			// might already have language information

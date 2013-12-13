@@ -3,7 +3,7 @@
 Plugin Name: mqTranslate
 Plugin URI: http://www.xhaleera.com/index.php/wordpress/mqtranslate/
 Description: Adds userfriendly multilingual content support into Wordpress. mqTranslate is a fork of the well-known <a href="http://www.qianqin.de/mqtranslate/">qTranslate</a> plugin by <a href="http://www.qianqin.de/">Qian Qin</a>, extending the original software with collaborative and team-oriented features.
-Version: 2.5.39
+Version: 2.5.40
 Author: xhaleera
 Author URI: http://www.xhaleera.com
 Tags: multilingual, multi, language, admin, tinymce, mqTranslate, Polyglot, bilingual, widget, switcher, professional, human, translation, service
@@ -46,6 +46,7 @@ Tags: multilingual, multi, language, admin, tinymce, mqTranslate, Polyglot, bili
 	ar by Mohamed Magdy
 	pt by netolazaro
 	gl by Andrés Bott
+	sr by Borisa Djuraskovic from WebHostingHub <http://www.webhostinghub.com>
 	
 	Plugin Translation Contributers
 	===============================
@@ -88,7 +89,7 @@ Tags: multilingual, multi, language, admin, tinymce, mqTranslate, Polyglot, bili
 // mqTranslate Editor will only activated for the given version of Wordpress.
 // Can be changed to use with other versions but might cause problems and/or data loss!
 define('QT_MIN_SUPPORTED_WP_VERSION', '3.6.1');
-define('QT_MAX_SUPPORTED_WP_VERSION', '3.7.1');
+define('QT_MAX_SUPPORTED_WP_VERSION', '3.8');
 define('QT_STRING',		1);
 define('QT_BOOLEAN',	2);
 define('QT_INTEGER',	3);
@@ -148,6 +149,7 @@ $q_config['pre_domain']['ar'] = "ar";
 $q_config['pre_domain']['pt'] = "pt";
 $q_config['pre_domain']['pl'] = "pl";
 $q_config['pre_domain']['gl'] = "gl";
+$q_config['pre_domain']['sr'] = 'sr';
 
 // Names for languages in the corresponding language, add more if needed
 $q_config['language_name']['de'] = "Deutsch";
@@ -167,6 +169,7 @@ $q_config['language_name']['ar'] = "العربية";
 $q_config['language_name']['pt'] = "Português";
 $q_config['language_name']['pl'] = "Polski";
 $q_config['language_name']['gl'] = "galego";
+$q_config['language_name']['sr'] = 'српски';
 
 // Locales for languages
 // see locale -a for available locales
@@ -187,6 +190,7 @@ $q_config['locale']['ar'] = "ar";
 $q_config['locale']['pt'] = "pt_BR";
 $q_config['locale']['pl'] = "pl_PL";
 $q_config['locale']['gl'] = "gl_ES";
+$q_config['locale']['sr'] = 'sr_RS';
 
 // Language not available messages
 // %LANG:<normal_seperator>:<last_seperator>% generates a list of languages seperated by <normal_seperator> except for the last one, where <last_seperator> will be used instead.
@@ -207,12 +211,13 @@ $q_config['not_available']['ar'] = "عفوا، هذه المدخلة موجود�
 $q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.";
 $q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 $q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
+$q_config['not_available']['sr'] = "Zao nam je, ovaj ulaz je jedino moguc u %LANG:, : and %.";
 
 // qTranslate Services
 $q_config['mqtranslate_services'] = false;
 
 // strftime usage (backward compability)
-$q_config['use_strftime'] = QT_DATE;
+$q_config['use_strftime'] = QT_STRFTIME;
 
 // Date Configuration
 $q_config['date_format']['en'] = '%A %B %e%q, %Y';
@@ -232,6 +237,7 @@ $q_config['date_format']['ar'] = '%d/%m/%Y';
 $q_config['date_format']['pt'] = '%d de %B de %Y';
 $q_config['date_format']['pl'] = '%d/%m/%y';
 $q_config['date_format']['gl'] = '%d de %B de %Y';
+$q_config['date_format']['sr'] = '%A, %d. %m. %Y';
 
 $q_config['time_format']['en'] = '%I:%M %p';
 $q_config['time_format']['de'] = '%H:%M';
@@ -250,6 +256,7 @@ $q_config['time_format']['ar'] = '%H:%M';
 $q_config['time_format']['pt'] = '%H:%M hrs.';
 $q_config['time_format']['pl'] = '%H:%M';
 $q_config['time_format']['gl'] = '%H:%M hrs.';
+$q_config['time_format']['sr'] = '%H.%M';
 
 // Flag images configuration
 // Look in /flags/ directory for a huge list of flags for usage
@@ -270,6 +277,7 @@ $q_config['flag']['ar'] = 'arle.png';
 $q_config['flag']['pt'] = 'br.png';
 $q_config['flag']['gl'] = 'galego.png';
 $q_config['flag']['pl'] = 'pl.png';
+$q_config['flag']['sr'] = 'rs.png';
 
 // Location of flags (needs trailing slash!)
 $q_config['flag_location'] = 'plugins/mqtranslate/flags/';
