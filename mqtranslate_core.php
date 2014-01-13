@@ -71,14 +71,8 @@ function qtrans_init() {
 		$q_config['cookie_enabled'] = false;
 	}
 	
-	// init Javascript functions
-	qtrans_initJS();
-	
 	// update Gettext Databases if on Backend
 	if(defined('WP_ADMIN') && $q_config['auto_update_mo']) qtrans_updateGettextDatabases();
-	
-	// update definitions if neccesary
-	if(defined('WP_ADMIN') && current_user_can('manage_categories')) qtrans_updateTermLibrary();
 	
 	// extract url information
 	$q_config['url_info'] = qtrans_extractURL($_SERVER['REQUEST_URI'], $_SERVER["HTTP_HOST"], isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
@@ -160,6 +154,14 @@ function qtrans_init() {
 	
 	// fix url to prevent xss
 	$q_config['url_info']['url'] = qtrans_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
+}
+
+function qtrans_postInit() {
+	// init Javascript functions
+	qtrans_initJS();
+	
+	// update definitions if neccesary
+	if(defined('WP_ADMIN') && current_user_can('manage_categories')) qtrans_updateTermLibrary();
 }
 
 // returns cleaned string and language information
