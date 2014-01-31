@@ -213,11 +213,6 @@ function qtrans_checkCanonical($redirect_url, $requested_url) {
 	return $redirect_url;
 }
 
-function qtrans_fixSearchForm($form) {
-	$form = preg_replace('#action="[^"]*"#','action="'.trailingslashit(qtrans_convertURL(get_home_url())).'"',$form);
-	return $form;
-}
-
 function qtrans_fixAdminBar($wp_admin_bar) {
 	global $wp_admin_bar;
 	foreach($wp_admin_bar->get_nodes() as $node) {
@@ -318,7 +313,6 @@ add_filter('feed_link',						'qtrans_convertURL');
 add_filter('post_comments_feed_link',		'qtrans_convertURL');
 add_filter('tag_feed_link',					'qtrans_convertURL');
 add_filter('get_pagenum_link',				'qtrans_convertURL');
-add_filter('get_search_form',				'qtrans_fixSearchForm', 10, 1);
 add_filter('manage_posts_columns',			'qtrans_languageColumnHeader');
 add_filter('manage_posts_custom_column',	'qtrans_languageColumn');
 add_filter('manage_pages_columns',			'qtrans_languageColumnHeader');

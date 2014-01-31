@@ -147,11 +147,6 @@ function qtrans_init() {
 	// load plugin translations
 	load_plugin_textdomain('mqtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
 	
-	// remove traces of language (or better not?)
-	//unset($_GET['lang']);
-	$_SERVER['REQUEST_URI'] = $q_config['url_info']['url'];
-	$_SERVER['HTTP_HOST'] = $q_config['url_info']['host'];
-	
 	// fix url to prevent xss
 	$q_config['url_info']['url'] = qtrans_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 }
