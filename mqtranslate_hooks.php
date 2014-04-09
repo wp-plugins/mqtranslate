@@ -84,8 +84,8 @@ function qtrans_optionFilter($do='enable') {
 
 function qtrans_adminHeader() {
 	echo "<style type=\"text/css\" media=\"screen\">\n";
-	echo ".qtrans_title_input { border:0pt none; font-size:1.7em; outline-color:invert; outline-style:none; outline-width:medium; padding:0pt; width:100%; }\n";
-	echo ".qtrans_title_wrap { border-color:#CCCCCC; border-style:solid; border-width:1px; padding:2px 3px; }\n";
+	echo ".qtrans_title_input { border:0pt none; font-size:1.7em; outline-color:invert; outline-style:none; outline-width:medium; padding: 3px 8px; width:100%; }\n";
+	echo ".qtrans_title_wrap { border: 0 none; padding: 0; }\n";
 	echo "#qtrans_textarea_content { padding:6px; border:0 none; line-height:150%; outline: none; margin:0pt; width:100%; -moz-box-sizing: border-box;";
 	echo	"-webkit-box-sizing: border-box; -khtml-box-sizing: border-box; box-sizing: border-box; }\n";
 	echo ".qtrans_title { -moz-border-radius: 6px 6px 0 0;";
@@ -96,6 +96,7 @@ function qtrans_adminHeader() {
 	echo "#postexcerpt textarea { height:4em; margin:0; width:98% }";
 	echo ".mqtranslate_lang_div { float:right; height:12px; width:18px; padding:6px 5px 8px 5px; cursor:pointer }";
 	echo ".mqtranslate_lang_div.active { background: #DFDFDF; border-left:1px solid #D0D0D0; border-right: 1px solid #F7F7F7; padding:6px 4px 8px 4px }";
+	echo "#post-body-content .postarea { margin-bottom: 10px; }";
 	do_action('mqtranslate_css');
 	echo "</style>\n";
 	return qtrans_optionFilter('disable');
