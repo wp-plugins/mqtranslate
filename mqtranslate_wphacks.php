@@ -60,7 +60,7 @@ function qtrans_modifyRichEditor($old_content) {
 	}
 	// save callback hook
 	
-	preg_match("/<textarea[^>]*id=\"([^']+)\"/",$old_content,$matches);
+	preg_match("/<textarea[^>]*id=\"([^\"]+)\"/",$old_content,$matches);
 	$id = $matches[1];
 	preg_match("/cols=\"([^\"]+)\"/",$old_content,$matches);
 	$cols = $matches[1];
