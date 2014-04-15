@@ -251,6 +251,7 @@ add_action('init', 							'qtrans_postInit');
 add_action('admin_head',					'qtrans_adminHeader');
 add_action('admin_menu',					'qtrans_adminMenu');
 add_action('wp_before_admin_bar_render',	'qtrans_fixAdminBar');
+add_action('wp_tiny_mce_init', 				'qtrans_TinyMCE_init');
 
 // Hooks (execution time critical filters) 
 add_filter('the_content',					'qtrans_useCurrentLanguageIfNotFoundShowAvailable', 0);

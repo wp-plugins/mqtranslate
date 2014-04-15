@@ -38,13 +38,20 @@ function qtrans_modifyTermForm($id, $name, $term) {
 		}
 	}
 	// hide real category text
-	echo "ins.style.display='none';\n";
+	echo "if (ins != null) ins.style.display='none';\n";
 	echo "// ]]>\n</script>\n";
 }
 
 function qtrans_modifyTermFormFor($term) {
 	qtrans_modifyTermForm('name', __('Name'), $term);
 	qtrans_modifyTermForm('tag-name', __('Name'), $term);
+}
+
+function qtrans_TinyMCE_init() {
+	global $q_config;
+	echo "<script type=\"text/javascript\">\n// <![CDATA[\n";
+	echo $q_config['js']['qtrans_updateTinyMCE'];
+	echo "</script>\n";
 }
 
 // Modifys TinyMCE to edit multilingual content
@@ -82,7 +89,7 @@ function qtrans_modifyRichEditor($old_content) {
 	$content_append = "";
 	
 	// create editing field for selected languages
-	$qt_textarea = '<textarea id="qtrans_textarea_'.$id.'" name="qtrans_textarea_'.$id.'" tabindex="2" cols="'.$cols.'" style="display:none" onblur="qtrans_save(this.value);"></textarea>';
+	$qt_textarea = '<textarea class="wp-editor-area" id="qtrans_textarea_'.$id.'" name="qtrans_textarea_'.$id.'" tabindex="2" cols="'.$cols.'" style="display:none" onblur="qtrans_save(this.value);"></textarea>';
 	$old_content = preg_replace('#(<textarea[^>]*>.*</textarea>)#', '$1'.$qt_textarea, $old_content);
 	
 	// do some crazy js to alter the admin view
@@ -222,7 +229,8 @@ function qtrans_insertTermInput($id,$name,$term,$language){
 		";
 	} else {
 	$html .="
-		i.value = ins.value;
+		if (ins != null)
+			i.value = ins.value;
 		";
 	}
 	if($language == $q_config['default_language']) {
@@ -236,17 +244,20 @@ function qtrans_insertTermInput($id,$name,$term,$language){
 						break;
 					}
 				}
-				ins.value = document.getElementById('qtrans_term_".$language."').value;
+				if (ins != null)
+					ins.value = document.getElementById('qtrans_term_".$language."').value;
 			};
 			";
 	}
 	$html .="
-		ins = ins.parentNode;
+		if (ins != null)
+			ins = ins.parentNode;
 		d.className = 'form-field form-required';
 		ll.appendChild(l);
 		d.appendChild(ll);
 		d.appendChild(i);
-		ins.parentNode.insertBefore(d,ins);
+		if (ins != null)
+			ins.parentNode.insertBefore(d,ins);
 		";
 	return $html;	
 }

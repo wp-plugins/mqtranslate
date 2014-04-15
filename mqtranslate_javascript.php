@@ -238,24 +238,29 @@ function qtrans_initJS() {
 		});
 		";
 	
-	$q_config['js']['qtrans_wpOnload'] = "
-		if(typeof(wpOnload)!='undefined') wpOnload2 = wpOnload;
-		wpOnload = function() {
-			for(var i in tinyMCEPreInit.qtInit) {
+	$q_config['js']['qtrans_updateTinyMCE'] = "
+		(function() {
+			for (var i in tinyMCEPreInit.qtInit) {
 				var tmp = tinyMCEPreInit.qtInit[i];
 				tmp.id = 'qtrans_textarea_'+tmp.id;
-				try { quicktags( tmp ); } catch(e){}
+				tinyMCEPreInit.qtInit[tmp.id] = tmp;
+				delete tinyMCEPreInit.qtInit[i];
 				jQuery('#ed_toolbar').hide();
 			}
-			// remove hook so tinymce doesn't load for content
-			var hook = tinyMCEPreInit.mceInit['content']
+			
+			var hook = tinyMCEPreInit.mceInit['content'];
 			hook.elements='hook-to-nothing';
+			hook.selector = '#qtrans_textarea_content';
 			delete tinyMCEPreInit.mceInit['content'];
 			tinyMCEPreInit.mceInit['qtrans_textarea_content'] = hook;
 			
-			if(typeof(wpOnload2)=='function') wpOnload2();
-		}
+			var wrap = jQuery('#wp-content-wrap');
+			var html = '<div id=\"wp-qtrans_textarea_content-wrap\" class=\"' + wrap.prop('className') + '\"></div>';
+			jQuery('body').append(html);
+		}());
+	";
 	
+	$q_config['js']['qtrans_wpOnload'] = "
 		jQuery(document).ready(function() {
 			qtrans_editorInit();
 		});
@@ -282,22 +287,22 @@ function qtrans_initJS() {
 				// correct p for tinymce
 				jQuery('#qtrans_textarea_content').val(switchEditors.wpautop(jQuery('#qtrans_textarea_content').val()))
 				// let wp3.5 autohook take care of init
-				qtrans_hook_on_tinyMCE('qtrans_textarea_content');
+				qtrans_hook_on_tinyMCE('qtrans_textarea_content', false);
 			}
 		}
 		";
 	
 	$q_config['js']['qtrans_hook_on_tinyMCE'] = "
-		qtrans_hook_on_tinyMCE = function(id) {
+		qtrans_hook_on_tinyMCE = function(id, initEditor) {
 			tinyMCEPreInit.mceInit[id].setup = function(ed) {
-				ed.onSaveContent.add(function(ed, o) {
-					if (!ed.isHidden())  {
-						qtrans_save(switchEditors.pre_wpautop(o.content));
-					}
+				ed.on('SaveContent', function(e) {
+					if (!ed.isHidden())
+						qtrans_save(switchEditors.pre_wpautop(e.content));
 				});
 			};
-			ed = new tinymce.Editor(id, tinyMCEPreInit.mceInit[id]);
-			ed.render();
+			
+			if (initEditor)
+				tinymce.init(tinyMCEPreInit.mceInit[id]);
 		}
 		";
 	
@@ -342,7 +347,7 @@ function qtrans_initJS() {
 	
 	$q_config['js']['qtrans_switch'] = "
 		switchEditors.go = function(id, lang) {
-			id = id || 'content';
+			id = id || 'qtrans_textarea_content';
 			lang = lang || 'toggle';
 			
 			if ( 'toggle' == lang ) {
@@ -358,6 +363,7 @@ function qtrans_initJS() {
 			var ta = document.getElementById(id);
 			var dom = tinymce.DOM;
 			var wrap_id = 'wp-'+id+'-wrap';
+			var wrap_id2 = 'wp-qtrans_textarea_content-wrap';
 			
 			// update merged content
 			if(inst && ! inst.isHidden()) {
@@ -386,22 +392,26 @@ function qtrans_initJS() {
 				
 				dom.removeClass(wrap_id, 'tmce-active');
 				dom.addClass(wrap_id, 'html-active');
+				dom.removeClass(wrap_id2, 'tmce-active');
+				dom.addClass(wrap_id2, 'html-active');
 				setUserSetting( 'editor', 'html' );
 			} else if(lang=='tmce') {
 				if(inst && ! inst.isHidden())
 					return false;
 				if ( typeof(QTags) != 'undefined' )
-					QTags.closeAllTags(id);
+					QTags.closeAllTags('qtrans_textarea_' + id);
 				if ( tinyMCEPreInit.mceInit['qtrans_textarea_'+id] && tinyMCEPreInit.mceInit['qtrans_textarea_'+id].wpautop )
 					vta.value = this.wpautop(qtrans_use(qtrans_get_active_language(),ta.value));
 				if (inst) {
 					inst.show();
 				} else {
-					qtrans_hook_on_tinyMCE('qtrans_textarea_'+id);
+					qtrans_hook_on_tinyMCE('qtrans_textarea_'+id, true);
 				}
 				
 				dom.removeClass(wrap_id, 'html-active');
 				dom.addClass(wrap_id, 'tmce-active');
+				dom.removeClass(wrap_id2, 'html-active');
+				dom.addClass(wrap_id2, 'tmce-active');
 				setUserSetting('editor', 'tinymce');
 			} else {
 				// switch content
