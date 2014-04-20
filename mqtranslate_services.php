@@ -121,7 +121,7 @@ function qs_queryQS($action, $data='', $fast = false) {
 	}
 	if(!$fp) return false;
 	
-	fputs($fp, "POST /mqtranslate/services/$action HTTP/1.1\r\n");
+	fputs($fp, "POST /qtranslate/services/$action HTTP/1.1\r\n");
 	fputs($fp, "Host: www.qianqin.de\r\n");
 	fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
 	fputs($fp, "Content-length: ". strlen($data) ."\r\n");
@@ -649,7 +649,7 @@ function qs_service() {
 <div class="wrap">
 <h2><?php _e('qTranslate Services', 'mqtranslate'); ?></h2>
 <div id="message" class="error fade"><p><?php echo $error; ?></p></div>
-<p><?php printf(__('An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href="%s">Support Forum</a>','mqtranslate'), 'http://www.qianqin.de/mqtranslate/forum/');?></p>
+<p><?php printf(__('An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href="%s">Support Forum</a>','mqtranslate'), 'http://www.qianqin.de/qtranslate/forum/');?></p>
 </div>
 <?php
 	return;

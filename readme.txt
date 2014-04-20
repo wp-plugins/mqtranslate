@@ -3,7 +3,7 @@ Contributors: chsxf
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, professional, translation, service, human
 Requires at least: 3.9-alpha
 Tested up to: 3.9
-Stable tag: 2.6
+Stable tag: 2.6.1
 Donate Link: http://www.qianqin.de/qtranslate/contribute/
 License: GPLv2
 
@@ -66,6 +66,12 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 3. qTranslate Services (Translation)
 
 == Changelog ==
+
+2.6.1:
+
+- Added support for language switches in the_date(), get_the_date(), the_modified_date() and get_the_modified_date() functions.
+- Fixed problem with pagination URLs
+- Fixed support for qTranslate Services
 
 2.6:
 

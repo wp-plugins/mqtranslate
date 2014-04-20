@@ -222,7 +222,8 @@ function mqtrans_postUpdated($post_ID, $after, $before) {
 }
 
 function mqtrans_filterHomeURL($url, $path, $orig_scheme, $blog_id) {
-	return (empty($path) || $path == '/') ? qtrans_convertURL($url) : $url;
+	global $q_config;
+	return ((empty($path) && $q_config['url_mode'] == QT_URL_PATH) || $path == '/') ? qtrans_convertURL($url) : $url;
 }
 
 function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $single) {
