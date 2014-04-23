@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mqTranslate 2.5.34.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-15 16:27+0100\n"
-"PO-Revision-Date: 2014-04-15 16:28+0100\n"
+"POT-Creation-Date: 2014-04-23 10:41+0100\n"
+"PO-Revision-Date: 2014-04-23 10:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -21,7 +21,7 @@ msgid "Language Management"
 msgstr "Gestion des langues"
 
 #: ../mqtranslate_configuration.php:25 ../mqtranslate_configuration.php:610
-#: ../mqtranslate_hooks.php:171
+#: ../mqtranslate_hooks.php:180
 msgid "Languages"
 msgstr "Langues"
 
@@ -574,7 +574,7 @@ msgstr "Ajouter une langue"
 msgid "Add Language &raquo;"
 msgstr "Ajouter la langue &raquo;"
 
-#: ../mqtranslate_hooks.php:158
+#: ../mqtranslate_hooks.php:167
 msgid "Settings"
 msgstr "Configurations"
 
@@ -967,28 +967,25 @@ msgstr "Texte et image"
 msgid "Dropdown Box"
 msgstr "Sélecteur"
 
-#: ../mqtranslate_wphacks.php:64
+#: ../mqtranslate_wphacks.php:93
 msgid ""
 "The mqTranslate Editor has disabled itself because it hasn't been tested "
 "with your Wordpress version yet. This is done to prevent Wordpress from "
-"malfunctioning. You can reenable it by <a href=\"javascript:"
-"qtrans_editorInit();\" title=\"Activate mqTranslate\" id=\"qtrans_imsg_link"
-"\">clicking here</a> (may cause <b>data loss</b>! Use at own risk!). To "
-"remove this message permanently, please update mqTranslate to the <a href="
-"\"http://www.qianqin.de/mqtranslate/download/\">corresponding version</a>."
+"malfunctioning. To remove this message permanently, please update "
+"mqTranslate to the <a href=\"http://wordpress.org/plugins/mqtranslate/\" "
+"target=\"_blank\">corresponding version</a>."
 msgstr ""
 "Cette version de mqTranslate n'a pas été testée avec votre version de "
 "Wordpress. Pour prévenir tout dysfonctionnement, l'éditeur mqTranslate a été "
-"désactivé. Vous pouvez le réactiver en <a href=\"javascript:"
-"qtrans_editorInit();\" title=\"Activer mqTranslate\" id=\"qtrans_imsg_link"
-"\">cliquant ici</a> (peut causer la <b>perte de données</b>!). Pour "
-"supprimer ce message, veuillez mettre à jour la version de mqTranslate."
+"désactivé. Pour supprimer ce message définitivement, veuillez <a href="
+"\"http://wordpress.org/plugins/mqtranslate/\" target=\"_blank\">mettre à "
+"jour</a> la version de mqTranslate."
 
-#: ../mqtranslate_wphacks.php:324
+#: ../mqtranslate_wphacks.php:353
 msgid "Title"
 msgstr "Titre"
 
-#: ../mqtranslate_wphacks.php:326 ../mqtranslate_wphacks.php:371
+#: ../mqtranslate_wphacks.php:355 ../mqtranslate_wphacks.php:400
 msgid "Read only"
 msgstr "Lecture seule"
 
