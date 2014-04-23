@@ -59,7 +59,7 @@ function isWordPressMajorVersionSupported() {
 	$replacements = array('.', '.$1', '.');
 	$wp = preg_replace($patterns, $replacements, $GLOBALS['wp_version']);
 	$wp = array_slice(explode('.', $wp), 0, 2);
-	$min = explode('.', QT_MIN_SUPPORTED_WP_MAJOR_VERSION);
+	$min = explode('.', QT_MIN_SUPPORTED_WP_MINOR_VERSION);
 	$max = explode('.', QT_MAX_SUPPORTED_WP_MAJOR_VERSION);
 	
 	// Compare to minimum
@@ -74,7 +74,9 @@ function isWordPressMajorVersionSupported() {
 	// Compare to maximum
 	for ($i = 0; $i < 2; $i++)
 	{
-		if ($wp[$i] > $max[$i])
+		if ($wp[$i] < $max[$i])
+			return true;
+		else if ($wp[$i] > $max[$i])
 			return false;
 	}
 	
