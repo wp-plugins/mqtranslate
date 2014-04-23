@@ -44,7 +44,10 @@ function qtrans_header(){
 	}	
 }
 
-function qtrans_localeForCurrentLanguage($locale){
+function qtrans_localeForCurrentLanguage($locale) {
+	if (!defined('QTRANS_INIT'))
+		return $locale;
+	
 	global $q_config;
 	// try to figure out the correct locale
 	$locale = array();
@@ -103,11 +106,17 @@ function qtrans_adminHeader() {
 }
 
 function qtrans_useCurrentLanguageIfNotFoundShowAvailable($content) {
+	if (!defined('QTRANS_INIT'))
+		return $content;
+	
 	global $q_config;
 	return qtrans_use($q_config['language'], $content, true);
 }
 
 function qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($content) {
+	if (!defined('QTRANS_INIT'))
+		return $content;
+	
 	global $q_config;
 	return qtrans_use($q_config['language'], $content, false);
 }
@@ -335,7 +344,7 @@ add_filter('redirect_canonical',			'qtrans_checkCanonical', 10, 2);
 // skip this filters if on backend
 if(!defined('WP_ADMIN')) {
 	add_filter('the_posts',					'qtrans_postsFilter');
-	add_filter('wp_setup_nav_menu_item',		'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+	add_filter('wp_setup_nav_menu_item',	'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 	
 	// Compability with Default Widgets
 	qtrans_optionFilter();

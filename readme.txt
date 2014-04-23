@@ -2,8 +2,8 @@
 Contributors: chsxf
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, professional, translation, service, human
 Requires at least: 3.9-alpha
-Tested up to: 3.9
-Stable tag: 2.6.1
+Tested up to: 4.0-alpha
+Stable tag: 2.6.2
 Donate Link: http://www.qianqin.de/qtranslate/contribute/
 License: GPLv2
 
@@ -66,6 +66,12 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 3. qTranslate Services (Translation)
 
 == Changelog ==
+
+2.6.2:
+
+- Improved WordPress minor versions support. mqTranslate now checks only the WordPress major release version number to check its compatibility.
+- Fixed some unwanted notice messages for plugin developers or people having notice error displayed
+- [EXPERIMENTAL] Added support for WordPress 4.0-alpha
 
 2.6.1:
 

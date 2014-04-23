@@ -54,14 +54,44 @@ function qtrans_TinyMCE_init() {
 	echo "</script>\n";
 }
 
+function isWordPressMajorVersionSupported() {
+	$patterns = array('/(_|\-|\+)/', '/(\D+)/', '/\.{2,}/');
+	$replacements = array('.', '.$1', '.');
+	$wp = preg_replace($patterns, $replacements, $GLOBALS['wp_version']);
+	$wp = array_slice(explode('.', $wp), 0, 2);
+	$min = explode('.', QT_MIN_SUPPORTED_WP_MAJOR_VERSION);
+	$max = explode('.', QT_MAX_SUPPORTED_WP_MAJOR_VERSION);
+	
+	// Compare to minimum
+	for ($i = 0; $i < 2; $i++)
+	{
+		if ($wp[$i] < $min[$i])
+			return false;
+		else if ($wp[$i] > $min[$i])
+			break;
+	}
+	
+	// Compare to maximum
+	for ($i = 0; $i < 2; $i++)
+	{
+		if ($wp[$i] > $max[$i])
+			return false;
+	}
+	
+	return true;
+}
+
 // Modifys TinyMCE to edit multilingual content
 function qtrans_modifyRichEditor($old_content) {
 	global $q_config;
 	$init_editor = true;
-	if (version_compare($GLOBALS['wp_version'], QT_MIN_SUPPORTED_WP_VERSION) < 0
-			|| version_compare($GLOBALS['wp_version'], QT_MAX_SUPPORTED_WP_VERSION) > 0) {
-		if(!(isset($_REQUEST['mqtranslateincompatiblemessage'])&&$_REQUEST['mqtranslateincompatiblemessage']=="shown")) {
-			echo '<div class="updated" id="qtrans_imsg">'.__('The mqTranslate Editor has disabled itself because it hasn\'t been tested with your Wordpress version yet. This is done to prevent Wordpress from malfunctioning. You can reenable it by <a href="javascript:qtrans_editorInit();" title="Activate mqTranslate" id="qtrans_imsg_link">clicking here</a> (may cause <b>data loss</b>! Use at own risk!). To remove this message permanently, please update mqTranslate to the <a href="http://www.qianqin.de/mqtranslate/download/">corresponding version</a>.', 'mqtranslate').'</div>';
+	if (!isWordPressMajorVersionSupported() 
+			&& !(isset($_REQUEST['mqtranslateincompatiblemessage']) && $_REQUEST['mqtranslateincompatiblemessage']=="shown"))
+	{
+		if (!defined('QT_DISPLAYED_INCOMPATIBLE_MESSAGE'))
+		{
+			echo '<div class="updated" id="qtrans_imsg">'.__('The mqTranslate Editor has disabled itself because it hasn\'t been tested with your Wordpress version yet. This is done to prevent Wordpress from malfunctioning. To remove this message permanently, please update mqTranslate to the <a href="http://wordpress.org/plugins/mqtranslate/" target="_blank">corresponding version</a>.', 'mqtranslate').'</div>';
+			define('QT_DISPLAYED_INCOMPATIBLE_MESSAGE', true);
 		}
 		$init_editor = false;
 	}
