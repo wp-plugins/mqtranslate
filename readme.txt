@@ -3,8 +3,8 @@ Contributors: chsxf
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, professional, translation, service, human
 Requires at least: 3.9
 Tested up to: 4.0-alpha
-Stable tag: 2.6.2.1
-Donate Link: http://www.qianqin.de/qtranslate/contribute/
+Stable tag: 2.6.2.2
+Donate Link: http://www.xhaleera.com/
 License: GPLv2
 
 Based on qTranslate, adds userfriendly multilingual content management and translation support, with collaborative and team-oriented extensions.
@@ -43,10 +43,12 @@ Flags in flags directory are made by Luc Balemans and downloaded from FOTW Flags
 
 == Installation ==
 
+**IMPORTANT NOTE:** Please disable qTranslate if it is installed and active before activating mqTranslate.
+
 Installation of this plugin is fairly easy:
 
-1. Download the plugin from [here](http://wordpress.org/extend/plugins/mqtranslate/ "mqTranslate").
-1. Extract all the files. 
+1. Download the plugin from [here](http://wordpress.org/plugins/mqtranslate/ "the WordPress Plugin Repository").
+1. Extract all the files.
 1. Upload everything (keeping the directory structure) to the `/wp-content/plugins/` directory.
 1. There should be a `/wp-content/plugins/mqtranslate` directory now with `mqtranslate.php` in it.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
@@ -54,10 +56,11 @@ Installation of this plugin is fairly easy:
 
 == Frequently Asked Questions ==
 
-The original qTranslate FAQ is available at the [Original qTranslate Homepage](http://www.qianqin.de/mqtranslate/).
+The original qTranslate FAQ is available at the [Original qTranslate Homepage](http://www.qianqin.de/qtranslate/).
 
-For Problems with the original qTranslate features, visits the [qTranslate Support Forum](http://www.qianqin.de/qtranslate/forum/).
-For Problems with mqTranslate-specific features, visits [our Support Page](http://www.xhaleera.com/index.php/support/).
+For Problems with the original qTranslate features, visits the [qTranslate Support Forum](http://wordpress.org/support/plugin/qtranslate).
+
+For Problems with mqTranslate-specific features, visits [our Support Page](http://wordpress.org/support/plugin/mqtranslate).
 
 == Screenshots ==
 
@@ -66,6 +69,13 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 3. qTranslate Services (Translation)
 
 == Changelog ==
+
+2.6.2.2:
+
+- Fixed a bug when reporting post modification date
+- Fixed a bug when dealing with timestamps when overridding date format when default formats
+- Fixed support for qTranslate Slug
+- Fixed a rare notice message appearing in options page related to flags
 
 2.6.2.1:
 
@@ -172,5 +182,5 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 
 WARNING!
 Original qTranslate software provides a specific version of the plugin for each version of WordPress. qTranslate is only compatible with the WordPress version it has been designed for.
-As a fork, mqTranslate suffers the same issue at this time.
+As a fork, mqTranslate inherits some drawbacks of this issue, despite our efforts to reduce its impact.
 Be aware of the fact that upgrading your WordPress installation to a new version prior the availability of the matching qTranslate or mqTranslate release will disable those plugins.

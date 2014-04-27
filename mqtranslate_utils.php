@@ -138,12 +138,12 @@ function qtrans_convertDateFormatToStrftimeFormat($format) {
 		'e' => '%Q',
 		'I' => '%o',
 		'O' => '%O',
-		'P' => '%s',
+		'U' => '%s',
 		'T' => '%v',
 		'Z' => '%1',
 		'c' => '%2',
 		'r' => '%3',
-		'U' => '%4'
+		'P' => '%4'
 	);
 	
 	$date_parameters = array();
