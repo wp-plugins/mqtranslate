@@ -641,8 +641,8 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false) {
 	switch($q_config['url_mode']) {
 		case QT_URL_PATH:	// pre url
 			// might already have language information
-			if(preg_match("#^([a-z]{2})/#i",$url,$match)) {
-				if(qtrans_isEnabled($match[1])) {
+			if(preg_match("#^([a-z]{2})/#i",$url,$_match)) {
+				if(qtrans_isEnabled($_match[1])) {
 					// found language information, remove it
 					$url = substr($url, 3);
 				}
@@ -664,7 +664,7 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false) {
 	}
 	
 	// see if cookies are activated
-	if(!$q_config['cookie_enabled'] && !$q_config['url_info']['internal_referer'] && $urlinfo['path'] == '' && $lang == $q_config['default_language'] && $q_config['language'] != $q_config['default_language'] && $q_config['hide_default_language']) {
+	if(!$q_config['cookie_enabled'] && !$q_config['url_info']['internal_referer'] && $urlinfo['path'] == '' && $lang == $q_config['default_language'] && $q_config['language'] != $q_config['default_language'] && $q_config['hide_default_language'] && !empty($match[2])) {
 		// :( now we have to make unpretty URLs
 		$url = preg_replace("#(&|\?)lang=".$match[2]."&?#i","$1",$url);
 		if(strpos($url,'?')===false) {

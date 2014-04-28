@@ -249,6 +249,13 @@ function qtrans_initJS() {
 			}
 			
 			var hook = tinyMCEPreInit.mceInit['content'];
+			
+			// Removing WPFullscreen plugin and button
+			var p = hook.plugins.split(',').filter(function(element) { return (element != 'wpfullscreen'); });
+			hook.plugins = p.join(',');
+			p = hook.toolbar1.split(',').filter(function(element) { return (element != 'wp_fullscreen'); });
+			hook.toolbar1 = p.join(',');
+			
 			hook.elements='hook-to-nothing';
 			hook.selector = '#qtrans_textarea_content';
 			delete tinyMCEPreInit.mceInit['content'];
@@ -273,13 +280,8 @@ function qtrans_initJS() {
 			jQuery('#qtrans_imsg').hide();
 			qtrans_editorInit3();
 			
-			var h = getUserSetting( 'ed_size' );
-			if(h<300) h = 300;
-			
 			jQuery('#content').hide();
 			if ( getUserSetting( 'editor' ) == 'html' ) {
-				if ( h )
-					jQuery('#qtrans_textarea_content').css('height', h - 20 + 'px');
 				jQuery('#qtrans_textarea_content').show();
 			} else {
 				// Activate TinyMCE if it's the user's default editor
@@ -298,6 +300,15 @@ function qtrans_initJS() {
 				ed.on('SaveContent', function(e) {
 					if (!ed.isHidden())
 						qtrans_save(switchEditors.pre_wpautop(e.content));
+				});
+				ed.on('init', function(e) {
+					var content_ifr = document.getElementById('content_ifr');
+					if (!content_ifr) {
+						content_ifr = jQuery('<div id=\"content_ifr\" style=\"display: none\"></div>').appendTo('body');
+						setInterval(function() {
+							content_ifr.css('height', jQuery('#qtrans_textarea_content_ifr').css('height'));
+						}, 100);
+					}
 				});
 			};
 			

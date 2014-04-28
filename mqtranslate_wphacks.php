@@ -92,7 +92,7 @@ function qtrans_modifyRichEditor($old_content) {
 	{
 		if (!defined('QT_DISPLAYED_INCOMPATIBLE_MESSAGE'))
 		{
-			echo '<div class="updated" id="qtrans_imsg">'.__('The mqTranslate Editor has disabled itself because it hasn\'t been tested with your Wordpress version yet. This is done to prevent Wordpress from malfunctioning. To remove this message permanently, please update mqTranslate to the <a href="http://wordpress.org/plugins/mqtranslate/" target="_blank">corresponding version</a>.', 'mqtranslate').'</div>';
+			echo '<div class="error" id="qtrans_imsg"><p>'.__('The mqTranslate Editor has disabled itself because it hasn\'t been tested with your Wordpress version yet. This is done to prevent Wordpress from malfunctioning. To remove this message permanently, please update mqTranslate to the <a href="http://wordpress.org/plugins/mqtranslate/" target="_blank">corresponding version</a>.', 'mqtranslate').'</p></div>';
 			define('QT_DISPLAYED_INCOMPATIBLE_MESSAGE', true);
 		}
 		$init_editor = false;
@@ -121,7 +121,12 @@ function qtrans_modifyRichEditor($old_content) {
 	$content_append = "";
 	
 	// create editing field for selected languages
-	$qt_textarea = '<textarea class="wp-editor-area" id="qtrans_textarea_'.$id.'" name="qtrans_textarea_'.$id.'" tabindex="2" cols="'.$cols.'" style="display:none" onblur="qtrans_save(this.value);"></textarea>';
+	$cookie = (int) get_user_setting( 'ed_size' );
+	if ($cookie)
+		$str_height = "height: {$cookie}px; ";
+	else 
+		$str_height = '';
+	$qt_textarea = '<textarea class="wp-editor-area" id="qtrans_textarea_'.$id.'" name="qtrans_textarea_'.$id.'" tabindex="2" cols="'.$cols.'" style="'.$str_height.'display:none" onblur="qtrans_save(this.value);"></textarea>';
 	$old_content = preg_replace('#(<textarea[^>]*>.*</textarea>)#', '$1'.$qt_textarea, $old_content);
 	
 	// do some crazy js to alter the admin view
