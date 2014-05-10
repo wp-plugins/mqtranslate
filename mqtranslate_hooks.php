@@ -225,8 +225,10 @@ function qtrans_checkCanonical($redirect_url, $requested_url) {
 
 function qtrans_fixAdminBar($wp_admin_bar) {
 	global $wp_admin_bar;
-	foreach($wp_admin_bar->get_nodes() as $node) {
-		$wp_admin_bar->add_node(qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($node));
+	$nodes = $wp_admin_bar->get_nodes();
+	if (is_array($nodes)) {
+		foreach($wp_admin_bar->get_nodes() as $node)
+			$wp_admin_bar->add_node(qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($node));
 	}
 }
 
@@ -305,6 +307,7 @@ add_filter('the_author',					'qtrans_useCurrentLanguageIfNotFoundUseDefaultLangu
 add_filter( "_wp_post_revision_field_post_title", 'qtrans_showAllSeperated', 0);
 add_filter( "_wp_post_revision_field_post_content", 'qtrans_showAllSeperated', 0);
 add_filter( "_wp_post_revision_field_post_excerpt", 'qtrans_showAllSeperated', 0);
+add_filter('get_the_author_description', 	'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 
 // Hooks (execution time non-critical filters) 
 add_filter('author_feed_link',				'qtrans_convertURL');

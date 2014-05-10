@@ -472,8 +472,10 @@ function mqtranslate_conf() {
 				<td>
 					<label for="hide_untranslated"><input type="checkbox" name="hide_untranslated" id="hide_untranslated" value="1"<?php echo ($q_config['hide_untranslated'])?' checked="checked"':''; ?>/> <?php _e('Hide Content which is not available for the selected language.', 'mqtranslate'); ?></label>
 					<br/>
+					<small>
 					<?php _e('When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in.', 'mqtranslate'); ?>
 					<?php _e('This function will not work correctly if you installed mqTranslate on a blog with existing entries. In this case you will need to take a look at "Convert Database" under "Advanced Settings".', 'mqtranslate'); ?>
+					</small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -481,12 +483,14 @@ function mqtranslate_conf() {
 				<td>
 					<label for="detect_browser_language"><input type="checkbox" name="detect_browser_language" id="detect_browser_language" value="1"<?php echo ($q_config['detect_browser_language'])?' checked="checked"':''; ?>/> <?php _e('Detect the language of the browser and redirect accordingly.', 'mqtranslate'); ?></label>
 					<br/>
+					<small>
 					<?php _e('When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser.', 'mqtranslate'); ?>
+					</small>
 				</td>
 			</tr>
 		</table>
-		<h3><?php _e('Advanced Settings', 'mqtranslate') ?><span id="mqtranslate-show-advanced" style="display:none"> (<a name="advanced_settings" href="#advanced_settings" onclick="showAdvanced();"><?php _e('Show', 'mqtranslate'); ?></a>)</span></h3>
-		<table class="form-table" id="mqtranslate-advanced">
+		<h3><?php _e('Advanced Settings', 'mqtranslate') ?><span id="mqtranslate-show-advanced"> (<a name="advanced_settings" href="#" onclick="return showAdvanced();"><?php _e('Show / Hide', 'mqtranslate'); ?></a>)</span></h3>
+		<table class="form-table" id="mqtranslate-advanced" style="display: none">
 			<tr>
 				<th scope="row"><?php _e('URL Modification Mode', 'mqtranslate') ?></th>
 				<td>
@@ -494,8 +498,11 @@ function mqtranslate_conf() {
 						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QT_URL_QUERY; ?>" <?php echo ($q_config['url_mode']==QT_URL_QUERY)?"checked=\"checked\"":""; ?> /> <?php _e('Use Query Mode (?lang=en)', 'mqtranslate'); ?></label><br />
 						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QT_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QT_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php _e('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'mqtranslate'); ?></label><br />
 						<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QT_URL_DOMAIN; ?>" <?php echo ($q_config['url_mode']==QT_URL_DOMAIN)?"checked=\"checked\"":""; ?> /> <?php _e('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'mqtranslate'); ?></label><br />
-					</fieldset><br/>
-					<?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode!', 'mqtranslate'); ?><br/>
+					</fieldset>
+					<small>
+					<?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode!', 'mqtranslate'); ?>
+					</small>
+					<br/><br/>
 					<label for="hide_default_language"><input type="checkbox" name="hide_default_language" id="hide_default_language" value="1"<?php echo ($q_config['hide_default_language'])?' checked="checked"':''; ?>/> <?php _e('Hide URL language information for default language.', 'mqtranslate'); ?></label>
 				</td>
 			</tr>
@@ -504,7 +511,7 @@ function mqtranslate_conf() {
 				<td>
 					<?php echo trailingslashit(WP_CONTENT_URL); ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:50%"/>
 					<br/>
-					<?php _e('Path to the flag images under wp-content, with trailing slash. (Default: plugins/mqtranslate/flags/)', 'mqtranslate'); ?>
+					<small><?php _e('Path to the flag images under wp-content, with trailing slash. (Default: plugins/mqtranslate/flags/)', 'mqtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -512,7 +519,7 @@ function mqtranslate_conf() {
 				<td>
 					<input type="text" name="ignore_file_types" id="ignore_file_types" value="<?php echo $q_config['ignore_file_types']; ?>" style="width:100%"/>
 					<br/>
-					<?php _e('Don\'t convert Links to files of the given file types. (Default: gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js)', 'mqtranslate'); ?>
+					<small><?php _e('Don\'t convert Links to files of the given file types. (Default: gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js)', 'mqtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -522,7 +529,7 @@ function mqtranslate_conf() {
 					<br/>
 					<label for="update_mo_now"><input type="checkbox" name="update_mo_now" id="update_mo_now" value="1" /> <?php _e('Update Gettext databases now.', 'mqtranslate'); ?></label>
 					<br/>
-					<?php _e('mqTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files).', 'mqtranslate'); ?>
+					<small><?php _e('mqTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files).', 'mqtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -532,7 +539,7 @@ function mqtranslate_conf() {
 					<label><input type="radio" name="use_strftime" value="<?php echo QT_DATE_OVERRIDE; ?>" <?php echo ($q_config['use_strftime']==QT_DATE_OVERRIDE)?' checked="checked"':''; ?>/> <?php _e('Use emulated date function and replace formats with the predefined formats for each language.', 'mqtranslate'); ?></label><br />
 					<label><input type="radio" name="use_strftime" value="<?php echo QT_STRFTIME; ?>" <?php echo ($q_config['use_strftime']==QT_STRFTIME)?' checked="checked"':''; ?>/> <?php _e('Use strftime instead of date.', 'mqtranslate'); ?></label><br />
 					<label><input type="radio" name="use_strftime" value="<?php echo QT_STRFTIME_OVERRIDE; ?>" <?php echo ($q_config['use_strftime']==QT_STRFTIME_OVERRIDE)?' checked="checked"':''; ?>/> <?php _e('Use strftime instead of date and replace formats with the predefined formats for each language.', 'mqtranslate'); ?></label><br />
-					<?php _e('Depending on the mode selected, additional customizations of the theme may be needed.', 'mqtranslate'); ?>
+					<small><?php _e('Depending on the mode selected, additional customizations of the theme may be needed.', 'mqtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -544,7 +551,7 @@ function mqtranslate_conf() {
 					<br/>
 					<label for="mqtranslate_reset3"><input type="checkbox" name="mqtranslate_reset3" id="mqtranslate_reset3" value="1"/> <?php _e('Also delete Translations for Categories/Tags/Link Categories.', 'mqtranslate'); ?></label>
 					<br/>
-					<?php _e('If something isn\'t working correctly, you can always try to reset all mqTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'mqtranslate'); ?>
+					<small><?php _e('If something isn\'t working correctly, you can always try to reset all mqTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'mqtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr>
@@ -587,14 +594,12 @@ function mqtranslate_conf() {
 		<script type="text/javascript">
 		// <![CDATA[
 			function showAdvanced() {
-				document.getElementById('mqtranslate-advanced').style.display='block';
-				document.getElementById('mqtranslate-show-advanced').style.display='none';
+				var el = document.getElementById('mqtranslate-advanced');
+				if (el.style.display == 'block')
+					el.style.display = 'none';
+				else
+					el.style.display='block';
 				return false;
-			}
-			
-			if(location.hash!='#advanced_settings') {
-					document.getElementById('mqtranslate-show-advanced').style.display='inline';
-					document.getElementById('mqtranslate-advanced').style.display='none';
 			}
 		// ]]>
 		</script>
@@ -648,7 +653,7 @@ function mqtranslate_conf() {
 <h3><?php _e('Add Language', 'mqtranslate'); ?></h3>
 <form name="addcat" id="addcat" method="post" class="add:the-list: validate">
 <?php mqtranslate_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_default, $language_na_message); ?>
-<p class="submit"><input type="submit" name="submit" value="<?php _e('Add Language &raquo;', 'mqtranslate'); ?>" /></p>
+<p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php _e('Add Language &raquo;', 'mqtranslate'); ?>" /></p>
 </form></div>
 </div>
 </div><!-- /col-left -->

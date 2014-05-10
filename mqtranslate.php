@@ -3,7 +3,7 @@
 Plugin Name: mqTranslate
 Plugin URI: http://www.xhaleera.com/index.php/wordpress/mqtranslate/
 Description: Adds userfriendly multilingual content support into Wordpress. mqTranslate is a fork of the well-known <a href="http://www.qianqin.de/mqtranslate/">qTranslate</a> plugin by <a href="http://www.qianqin.de/">Qian Qin</a>, extending the original software with collaborative and team-oriented features.
-Version: 2.6.2.4
+Version: 2.6.2.5
 Author: xhaleera
 Author URI: http://www.xhaleera.com
 Tags: multilingual, multi, language, admin, tinymce, mqTranslate, Polyglot, bilingual, widget, switcher, professional, human, translation, service
@@ -454,6 +454,9 @@ $q_config['windows_locale']['yo'] = "Yoruba";
 $q_config['windows_locale']['za'] = "Zhuang";
 $q_config['windows_locale']['zh'] = "Chinese";
 $q_config['windows_locale']['zu'] = "Zulu";
+
+// User-level language protection
+$q_config['ul_lang_protection'] = 1;
 
 // Load mqTranslate
 require_once(dirname(__FILE__)."/mqtranslate_javascript.php");

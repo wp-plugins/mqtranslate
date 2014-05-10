@@ -3,7 +3,7 @@ Contributors: chsxf
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, professional, translation, service, human
 Requires at least: 3.9
 Tested up to: 4.0-alpha
-Stable tag: 2.6.2.4
+Stable tag: 2.6.2.5
 Donate Link: http://www.xhaleera.com/
 License: GPLv2
 
@@ -69,6 +69,16 @@ For Problems with mqTranslate-specific features, visits [our Support Page](http:
 3. qTranslate Services (Translation)
 
 == Changelog ==
+
+2.6.2.5:
+
+- Changed behavior of user-level language protection: from now, users whom profile has not been setup explictly will have read-write access to all languages
+- Added option to disable user-level language protection
+- Added translation support of user Biographical Info
+- Fixed bug causing backslashes to be unexpectedly removed from post title and content
+- Fixed bug in URL generation in the mqTranslate language menu (through widget or function) when qTranslate Slug is active
+- Fixed bug when using quicktags
+- Slightly improved settings page
 
 2.6.2.4:
 

@@ -686,7 +686,7 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false) {
 }
 
 // splits text with language tags into array
-function qtrans_split($text, $quicktags = true) {
+function qtrans_split($text, $quicktags = true, array &$languageMap = NULL) {
 	global $q_config;
 	
 	//init vars
@@ -704,6 +704,7 @@ function qtrans_split($text, $quicktags = true) {
 		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
 			if(qtrans_isEnabled($matches[1])) {
 				$current_language = $matches[1];
+				$languageMap[$current_language] = false;
 			} else {
 				$current_language = "invalid";
 			}
@@ -712,6 +713,7 @@ function qtrans_split($text, $quicktags = true) {
 		} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
 			if(qtrans_isEnabled($matches[1])) {
 				$current_language = $matches[1];
+				$languageMap[$current_language] = true;
 			} else {
 				$current_language = "invalid";
 			}
@@ -744,7 +746,7 @@ function qtrans_split($text, $quicktags = true) {
 	return $result;
 }
 
-function qtrans_join($texts) {
+function qtrans_join($texts, array $tagTypeMap = array()) {
 	global $q_config;
 	if(!is_array($texts)) $texts = qtrans_split($texts, false);
 	$split_regex = "#<!--more-->#ism";
@@ -763,8 +765,11 @@ function qtrans_join($texts) {
 			$text .= '<!--more-->';
 		}
 		foreach($q_config['enabled_languages'] as $language) {
-			if(isset($texts[$language][$i]) && $texts[$language][$i] !== '') {
-				$text .= '<!--:'.$language.'-->'.$texts[$language][$i].'<!--:-->';
+			if (isset($texts[$language][$i]) && $texts[$language][$i] !== '') {
+				if (empty($tagTypeMap[$language]))
+					$text .= '<!--:'.$language.'-->'.$texts[$language][$i].'<!--:-->';
+				else
+					$text .= "[:{$language}]{$texts[$language][$i]}";
 			}
 		}
 	}
