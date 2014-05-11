@@ -40,7 +40,7 @@ function mqtrans_currentUserCanEdit($lang) {
 	else
 	{
 		$user_meta = get_user_meta($cu->ID);
-		if (!array_key_exists('mqtranslate_language_access', $user_meta))
+		if (empty($user_meta) || !is_array($user_meta) || !array_key_exists('mqtranslate_language_access', $user_meta))
 			$user_langs = $q_config['enabled_languages'];
 		else
 			$user_langs = explode(',', get_user_meta($cu->ID, 'mqtranslate_language_access', true));
@@ -78,7 +78,7 @@ function mqtrans_userProfile($user) {
 	
 	// Editable languages
 	$user_meta = get_user_meta($user->ID);
-	if (!array_key_exists('mqtranslate_language_access', $user_meta))
+	if (empty($user_meta) || !is_array($user_meta) || !array_key_exists('mqtranslate_language_access', $user_meta))
 		$user_langs = $q_config['enabled_languages'];
 	else
 		$user_langs = explode(',', get_user_meta($user->ID, 'mqtranslate_language_access', true));
