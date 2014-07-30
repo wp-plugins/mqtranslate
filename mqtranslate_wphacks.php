@@ -48,10 +48,13 @@ function qtrans_modifyTermFormFor($term) {
 }
 
 function qtrans_TinyMCE_init() {
-	global $q_config;
-	echo "<script type=\"text/javascript\">\n// <![CDATA[\n";
-	echo $q_config['js']['qtrans_updateTinyMCE'];
-	echo "</script>\n";
+	if (user_can_richedit())
+	{
+		global $q_config;
+		echo "<script type=\"text/javascript\">\n// <![CDATA[\n";
+		echo $q_config['js']['qtrans_updateTinyMCE'];
+		echo "</script>\n";
+	}
 }
 
 function isWordPressMajorVersionSupported() {
@@ -107,7 +110,7 @@ function qtrans_modifyRichEditor($old_content) {
 	if($id!="content") return $old_content;
 	
 	// don't do anything to the editor if it's not rich
-	if(!user_can_richedit()) {
+	if (!user_can_richedit()) {
 		//echo '<p class="updated">'.__('The mqTranslate Editor could not be loaded because WYSIWYG/TinyMCE is not activated in your profile.').'</p>';
 		return $old_content;
 	}

@@ -775,7 +775,7 @@ function qtrans_split($text, $quicktags = true, array &$languageMap = NULL) {
 	}
 	
 	foreach ($result as $lang => $lang_content)
-		$result[$lang] = str_replace(array('<!--more-->', '<!--nextpage-->'), '', $lang_content);
+		$result[$lang] = preg_replace("#(<!--more-->|<!--nextpage-->)+$#ismS","",$lang_content);
 	
 	return $result;
 }
