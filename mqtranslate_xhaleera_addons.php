@@ -262,8 +262,12 @@ function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $sin
 					
 					if ($meta_key == '_menu_item_url')
 						$meta = array_map('qtrans_convertURL', $meta);
-					else
-						$meta = array_map('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage', $meta);
+					else {
+						foreach ($meta as &$v) {
+							if (!is_serialized($v))
+								$v = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($v);
+						}
+					}
 				}
 				else
 				{
@@ -274,7 +278,7 @@ function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $sin
 					
 					if ($meta_key == '_menu_item_url')
 						$meta = qtrans_convertURL($meta);
-					else
+					else if (!is_serialized($meta))
 						$meta = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($meta);
 				}
 				return $meta;
@@ -290,14 +294,18 @@ function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $sin
 				{
 					if ($k == '_menu_item_url')
 						$meta[$k] = array_map('qtrans_convertURL', $v);
-					else
-						$meta[$k] = array_map('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage', $v);
+					else {
+						foreach ($meta[$k] as &$mv) {
+							if (!is_serialized($mv))
+								$mv = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($mv);
+						}
+					}
 				}
 				else
 				{
 					if ($k == '_menu_item_url')
 						$meta[$k] = qtrans_convertURL($v);
-					else
+					else if (!is_serialized($meta[$k]))
 						$meta[$k] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($v);
 				}
 			}
