@@ -251,7 +251,7 @@ function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $sin
 	{
 		if (!empty($meta_key))
 		{
-			if (array_key_exists($meta_key, $meta) && !empty($meta[$meta_key]))
+			if (array_key_exists($meta_key, $meta) && !empty($meta[$meta_key]) && !preg_match('/^_/', $meta_key))
 			{
 				if ($single === false)
 				{
@@ -283,6 +283,9 @@ function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $sin
 		
 		else {
 			foreach ($meta as $k => $v) {
+				if (preg_match('/^_/', $k))
+					continue;
+				
 				if (is_array($v))
 				{
 					if ($k == '_menu_item_url')
