@@ -246,26 +246,57 @@ function mqtrans_filterHomeURL($url, $path, $orig_scheme, $blog_id) {
 }
 
 function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $single) {
-	if ($meta_key == '_menu_item_url')
+	$meta = wp_cache_get($object_id, 'post_meta');
+	if (!empty($meta))
 	{
-		$meta = wp_cache_get($object_id, 'post_meta');
-		if (!empty($meta) && array_key_exists($meta_key, $meta) && !empty($meta[$meta_key]))
+		if (!empty($meta_key))
 		{
-			if ($single === false)
+			if (array_key_exists($meta_key, $meta) && !empty($meta[$meta_key]))
 			{
-				if (is_array($meta[$meta_key]))
-					$meta = $meta[$meta_key];
+				if ($single === false)
+				{
+					if (is_array($meta[$meta_key]))
+						$meta = $meta[$meta_key];
+					else
+						$meta = array($meta[$meta_key]);
+					
+					if ($meta_key == '_menu_item_url')
+						$meta = array_map('qtrans_convertURL', $meta);
+					else
+						$meta = array_map('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage', $meta);
+				}
 				else
-					$meta = array($meta[$meta_key]);
-				$meta = array_map('qtrans_convertURL', $meta);
+				{
+					if (is_array($meta[$meta_key]))
+						$meta = $meta[$meta_key][0];
+					else
+						$meta = $meta[$meta_key];
+					
+					if ($meta_key == '_menu_item_url')
+						$meta = qtrans_convertURL($meta);
+					else
+						$meta = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($meta);
+				}
+				return $meta;
 			}
-			else
-			{
-				if (is_array($meta[$meta_key]))
-					$meta = $meta[$meta_key][0];
+		}
+		
+		else {
+			foreach ($meta as $k => $v) {
+				if (is_array($v))
+				{
+					if ($k == '_menu_item_url')
+						$meta[$k] = array_map('qtrans_convertURL', $v);
+					else
+						$meta[$k] = array_map('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage', $v);
+				}
 				else
-					$meta = $meta[$meta_key];
-				$meta = qtrans_convertURL($meta);
+				{
+					if ($k == '_menu_item_url')
+						$meta[$k] = qtrans_convertURL($v);
+					else
+						$meta[$k] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($v);
+				}
 			}
 			return $meta;
 		}

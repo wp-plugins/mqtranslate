@@ -907,9 +907,9 @@ function qtrans_use($lang, $text, $show_available=false) {
 		$end_seperator = $match[2];
 		// build available languages string backward
 		foreach ($available_languages as $k => $language) {
-			if ($k == 0)
+			if ($k == 1)
 				$language_list = $end_seperator.$language_list;
-			else
+			else if ($k > 1)
 				$language_list = $normal_seperator.$language_list;
 			$language_list = "<a href=\"".qtrans_convertURL('', $language)."\">".$q_config['language_name'][$language]."</a>".$language_list;
 		}
