@@ -246,68 +246,26 @@ function mqtrans_filterHomeURL($url, $path, $orig_scheme, $blog_id) {
 }
 
 function mqtrans_filterPostMetaData($original_value, $object_id, $meta_key, $single) {
-	$meta = wp_cache_get($object_id, 'post_meta');
-	if (!empty($meta))
+	if ($meta_key == '_menu_item_url')
 	{
-		if (!empty($meta_key))
+		$meta = wp_cache_get($object_id, 'post_meta');
+		if (!empty($meta) && array_key_exists($meta_key, $meta) && !empty($meta[$meta_key]))
 		{
-			if (array_key_exists($meta_key, $meta) && !empty($meta[$meta_key]) && !preg_match('/^_/', $meta_key))
+			if ($single === false)
 			{
-				if ($single === false)
-				{
-					if (is_array($meta[$meta_key]))
-						$meta = $meta[$meta_key];
-					else
-						$meta = array($meta[$meta_key]);
-					
-					if ($meta_key == '_menu_item_url')
-						$meta = array_map('qtrans_convertURL', $meta);
-					else {
-						foreach ($meta as &$v) {
-							if (!is_serialized($v))
-								$v = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($v);
-						}
-					}
-				}
+				if (is_array($meta[$meta_key]))
+					$meta = $meta[$meta_key];
 				else
-				{
-					if (is_array($meta[$meta_key]))
-						$meta = $meta[$meta_key][0];
-					else
-						$meta = $meta[$meta_key];
-					
-					if ($meta_key == '_menu_item_url')
-						$meta = qtrans_convertURL($meta);
-					else if (!is_serialized($meta))
-						$meta = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($meta);
-				}
-				return $meta;
+					$meta = array($meta[$meta_key]);
+				$meta = array_map('qtrans_convertURL', $meta);
 			}
-		}
-		
-		else {
-			foreach ($meta as $k => $v) {
-				if (preg_match('/^_/', $k))
-					continue;
-				
-				if (is_array($v))
-				{
-					if ($k == '_menu_item_url')
-						$meta[$k] = array_map('qtrans_convertURL', $v);
-					else {
-						foreach ($meta[$k] as &$mv) {
-							if (!is_serialized($mv))
-								$mv = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($mv);
-						}
-					}
-				}
+			else
+			{
+				if (is_array($meta[$meta_key]))
+					$meta = $meta[$meta_key][0];
 				else
-				{
-					if ($k == '_menu_item_url')
-						$meta[$k] = qtrans_convertURL($v);
-					else if (!is_serialized($meta[$k]))
-						$meta[$k] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($v);
-				}
+					$meta = $meta[$meta_key];
+				$meta = qtrans_convertURL($meta);
 			}
 			return $meta;
 		}
