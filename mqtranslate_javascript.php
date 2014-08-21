@@ -212,10 +212,12 @@ function qtrans_initJS() {
 		qtrans_assign = function(id, text) {
 			var inst = tinyMCE.get(id);
 			var ta = document.getElementById(id);
-			if (inst && ! inst.isHidden())
+			if(inst && ! inst.isHidden()) {
+				text = switchEditors.wpautop(text);
 				inst.execCommand('mceSetContent', null, text);
-			else
+			} else {
 				ta.value = text;
+			}
 		}
 		";
 		
@@ -286,6 +288,8 @@ function qtrans_initJS() {
 			} else {
 				// Activate TinyMCE if it's the user's default editor
 				jQuery('#qtrans_textarea_content').show();
+				// correct p for tinymce
+				jQuery('#qtrans_textarea_content').val(switchEditors.wpautop(jQuery('#qtrans_textarea_content').val()))
 				// let wp3.5 autohook take care of init
 				qtrans_hook_on_tinyMCE('qtrans_textarea_content', false);
 			}
@@ -296,8 +300,12 @@ function qtrans_initJS() {
 		qtrans_hook_on_tinyMCE = function(id, initEditor) {
 			tinyMCEPreInit.mceInit[id].setup = function(ed) {
 				ed.on('SaveContent', function(e) {
-					if (!ed.isHidden())
+					if (!ed.isHidden()) {
+						e.content = e.content.replace( /<p>(<br ?\/?>|\u00a0|\uFEFF)?<\/p>/g, '<p>&nbsp;</p>' );
+						if ( ed.getParam( 'wpautop', true ) )
+							e.content = switchEditors.pre_wpautop(e.content);
 						qtrans_save(e.content);
+					}
 				});
 				ed.on('init', function(e) {
 					var content_ifr = document.getElementById('content_ifr');
