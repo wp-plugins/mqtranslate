@@ -6,7 +6,7 @@ Tested up to: 4.1
 Stable tag: 2.10
 License: GPLv2
 
-**DEPRECATED in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).** Based on qTranslate, adds userfriendly multilingual content management and translation support, with collaborative and team-oriented extensions.
+DEPRECATED in favor of qTranslate X. Based on qTranslate, adds userfriendly multilingual content management and translation support, with collaborative and team-oriented extensions.
 
 == Description ==
 
