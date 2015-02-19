@@ -7,11 +7,11 @@ Tested up to: 4.1
 Stable tag: 2.10
 License: GPLv2
 
-*DEPRECATED in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).* Based on qTranslate, adds userfriendly multilingual content management and translation support, with collaborative and team-oriented extensions.
+**DEPRECATED in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).** Based on qTranslate, adds userfriendly multilingual content management and translation support, with collaborative and team-oriented extensions.
 
 Description
 -----------
-*As of February 19th, 2015, this plugin has been deprecated in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).*
+**As of February 19th, 2015, this plugin has been deprecated in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).**
 
 Writing multilingual content is already hard enough, why make using a plugin even more complicated? qTranslate has been created to let Wordpress have an easy to use interface for managing a fully multilingual web site.
 
@@ -46,7 +46,7 @@ Flags in flags directory are made by Luc Balemans and downloaded from FOTW Flags
 Installation
 ------------
 
-*As of February 19th, 2015, this plugin has been deprecated in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).*
+**As of February 19th, 2015, this plugin has been deprecated in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).**
 
 Installation of this plugin is fairly easy:
 
@@ -69,7 +69,7 @@ If your install does not include qTranslate, you can go with it:
 Frequently Asked Questions
 --------------------------
 
-*As of February 19th, 2015, this plugin has been deprecated in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).*
+**As of February 19th, 2015, this plugin has been deprecated in favor of [qTranslate X](http://wordpress.org/plugins/qtranslate-x/).**
 
 The original qTranslate FAQ is available at the [Original qTranslate Homepage](http://www.qianqin.de/qtranslate/).
 
