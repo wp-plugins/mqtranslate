@@ -805,10 +805,14 @@ function qtrans_language_nutral_path($path) {
 function qtrans_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false) {
 	global $q_config;
 	
+	// trim anchor
+        $anchor = preg_replace("%^([^\#]+)(#.*)?$%", "$2", $url);
+        $url = preg_replace("%^([^\#]+)(\#.*)?$%", "$1", $url);
+	
 	// invalid language
 	if($url=='') $url = esc_url($q_config['url_info']['url']);
 	if($lang=='') $lang = $q_config['language'];
-	if(defined('WP_ADMIN')&&!$forceadmin) return $url;
+	if(defined('WP_ADMIN')&&!$forceadmin) return $url.$anchor;
 	if(!qtrans_isEnabled($lang)) return "";
 	
 	// & workaround
@@ -832,7 +836,7 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false, $showDefaultL
 			}
 		}
 		if(substr($url,0,strlen($home))!=$home) {
-			return $url;
+			return $url.$anchor;
 		}
 		// strip home path
 		$url = substr($url,strlen($home));
@@ -861,7 +865,7 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false, $showDefaultL
 	
 	// ignore wp internal links
 	if (qtrans_language_nutral_path($url))
-		return $home."/".$url;
+		return $home."/".$url.$anchor;
 	
 	switch($q_config['url_mode']) {
 		case QT_URL_PATH:	// pre url
@@ -918,7 +922,7 @@ function qtrans_convertURL($url='', $lang='', $forceadmin = false, $showDefaultL
 	if($nottrailing && strpos($complete,'?')===false && strpos($complete,'#')===false && substr($complete,-1,1)=='/')
 		$complete = substr($complete,0,-1);
 	
-	return $complete;
+	return $complete.$anchor;
 }
 
 // splits text with language tags into array
